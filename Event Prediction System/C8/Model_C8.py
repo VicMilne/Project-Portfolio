@@ -9,15 +9,15 @@ from time import perf_counter
 default_decay = 0.85
 default_d = [6, 7, 9, 13, 14]
 
-e_num = 18
+e_num = 19
 
 r_coef = 1
 
 # numbered events where this contest appeared
-event_select = [2,3,4,5,6,7,8,9,10,13,16,17,18,19,20,22,23,26,27,28,33,35,38,40,41,42]
+event_select = [2,3,4,5,6,7,8,9,10,13,16,17,18,19,20,22,23,26,27,28,33,35,38,40,41,42,43]
 
 # average scores for every event
-event_averages = [9447, 9891, 9092, 7772, 7499, 15481, 13776, 8106, 9852, 7407, 8335, 10717, 13541, 13808, 12393, 11878, 7967, 10993, 11000]
+event_averages = [9447, 9891, 9092, 7772, 7499, 15481, 13776, 8106, 9852, 7407, 8335, 10717, 13541, 13808, 12393, 11878, 7967, 10993, 10390, 10500]
 
 # training results, removes high variance artifacts and normalizes
 # - Adjustments: add back spent points, multiply by 10700 / sum(event)
@@ -31,7 +31,7 @@ results_train = [1370, 906, 1220, 519, 1814, 1257, 948, 348, 1282, 1035, 874, 10
     866, 1016, 1211, 1012, 1366, 1706, 1292, 421, 1325, 502, 741, 1306, 1126, 693, 1183, 1208, 1272, 1261, 759, 1147,
     1056, 1138, 981, 990, 1145, 1492, 1314, 1241, 897, 446, 791, 1508, 802, 883, 1127, 901, 1384, 1024, 1326, 954,
     943, 1243, 1305, 774, 1254, 992, 1302, 474, 919, 1494, 1318, 824, 813, 1951, 839, 1618, 824, 816, 639, 1058,
-    1123, 1154, 1474, 327, 1146, 1248, 865, 943, 1091, 1330
+    1123, 1154, 1474, 327, 1146, 1248, 865, 943, 1091, 1330, 1512, 1230, 1018, 888, 1115, 527, 1193, 1081, 870, 1266
     ]
 
 # actual results from event
@@ -46,7 +46,7 @@ results = [
     866, 1016, 1211, 1012, 1366, 1706, 1292, 421, 1325, 502, 1027, 1809, 1560, 805, 1639, 1674, 1762, 1142, 533, 1590,
     1363, 967, 1266, 1278, 1452, 1925, 1600, 1295, 1113, 527, 993, 1914, 945, 1121, 1431, 1039, 1664, 970, 1447, 869,
     1047, 1380, 1449, 859, 1392, 1101, 1445, 526, 1020, 1659, 1241, 765, 0, 1844, 332, 1530, 257, 749, 249, 1000,
-    1242, 907, 1696, 251, 1319, 1419, 652, 720, 1256, 1531
+    1242, 907, 1696, 251, 1319, 1419, 652, 720, 1256, 1531, 1095, 1364, 1136, 593, 806, 516, 1390, 1260, 812, 1418
     ]
 
 # normalize actual event results to standard total per event
@@ -64,7 +64,8 @@ pr_preds = [967,967,967,967,967,967,967,967,967,967,1254,1497,1344,689,1156,958,
         974,1189,1116,1396,1433,1083,887,435,1477,1123,725,876,1044,1119,849,998,1412,824,899,377,
         641,949,994,845,946,943,972,977,1001,687,1297,1097,948,722,1111,1182,1132,888,1005,459,
         968,1137,1099,911,1295,1142,1359,1201,977,981,939,1051,1102,899,1494,759,1271,1062,1116,1530,
-        967,967,967,967,967,967,967,967,967,967,1100,1124,1418,1113,1378,943,1614,1424,1324,1271
+        967,967,967,967,967,967,967,967,967,967,1100,1124,1418,1113,1378,943,1614,1424,1324,1271,
+        967,967,967,967,967,967,967,967,967,967
         ]
 
 skips = {9: {"P000", "P059", "P023", "P060"}, 10: {"P067"}, 12: {"P001"},
@@ -98,7 +99,7 @@ class C8_class:
                     "EVE_9": -2, "EVE_10": -1, "EVE_11": 0, "EVE_14": 1, "EVE_18": 2, "EVE_19": 3, 
                     "EVE_21": 5, "EVE_22": 6, "EVE_24": 7, "EVE_25": 8, "EVE_28": 9, "EVE_29": 10, 
                     "EVE_30": 11, "EVE_35": 12, "EVE_37": 13, "EVE_40": 14, "EVE_42": 15, "EVE_43": 16,
-                    "EVE_44": 17, "CUR": 18}
+                    "EVE_44": 17, "EVE_45": 18, "CUR": 19}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.eve_str, self.e_dict[event], roster=roster)
@@ -885,23 +886,21 @@ def generate_pr(pdict, eve_str, decay=default_decay, d=default_d):
 
 
 if __name__ == "__main__":
-    x = perf_counter()
 
     cla = C8_class()
 
-    print(perf_counter() - x)
     pdict = cla.pdict
 
-    perfList = []
-    for key in cla.e_dict:
-        if(key != "CUR"):
-            val = cla.eve_pr(key)
-            for value in val:
-                perfList.append([value[1], value[0] + key[-2:]])
-    perfList = sorted(perfList, reverse=True)
+    # perfList = []
+    # for key in cla.e_dict:
+    #     if(key != "CUR"):
+    #         val = cla.eve_pr(key)
+    #         for value in val:
+    #             perfList.append([value[1], value[0] + key[-2:]])
+    # perfList = sorted(perfList, reverse=True)
 
     # test eve_pr
-    val = cla.eve_pr("EVE_17")
+    val = cla.eve_pr("EVE_45")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == e_num):
