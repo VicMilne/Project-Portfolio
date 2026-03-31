@@ -3,9 +3,9 @@ import os.path
 
 default_decay = 0.85
 default_d = [1, 7, 9, 10, 12, 13, 14, 16]
-eve_num = 20
+eve_num = 21
 
-event_select = [13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42]
+event_select = [13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42,43]
 
 results = [750, 1405, 1265, 690, 420, 1365, 385, 2215, 1295, 550, 940, 510, 1930, 480, 2130, 805, 850, 1135, 1005, 415,
     455, 955, 1115, 810, 1050, 1060, 1225, 1570, 1105, 780, 940, 1060, 815, 1270, 1230, 1520, 700, 400, 920, 925,
@@ -17,7 +17,8 @@ results = [750, 1405, 1265, 690, 420, 1365, 385, 2215, 1295, 550, 940, 510, 1930
     760, 1045, 1360, 840, 1020, 585, 635, 1075, 1645, 1290, 650, 1285, 680, 525, 1455, 1285, 1010, 905, 1200, 1085,
     545, 1025, 705, 760, 1665, 1275, 555, 1260, 1495, 545, 550, 930, 1175, 1405, 1185, 950, 1625, 1005, 775, 530,
     850, 950, 935, 1260, 1310, 1875, 500, 1175, 390, 970, 475, 1425, 1435, 1485, 830, 795, 975, 770, 1230, 430,
-    1655, 360, 825, 930, 1420, 1030, 585, 1300, 1045, 795, 1815, 825, 945, 620, 1110, 525, 1075, 875, 750, 1165]
+    1655, 360, 825, 930, 1420, 1030, 585, 1300, 1045, 795, 1815, 825, 945, 620, 1110, 525, 1075, 875, 750, 1165,
+    450, 1415, 920, 985, 500, 1345, 1270, 1125, 1140, 685]
 
 pr_preds = [
     980, 675, 1156, 1317, 1338, 951, 1084, 1583, 200, 933, 931, 1265, 718, 1088, 976, 1658, 790, 301, 1799, 663,
@@ -29,7 +30,8 @@ pr_preds = [
     832, 487, 952, 1657, 1109, 660, 867, 610, 1972, 855, 822, 413, 1334, 1113, 1443, 1613, 1396, 607, 223, 1037,
     1222, 674, 1920, 889, 931, 1255, 1057, 842, 733, 503, 729, 815, 635, 1205, 1739, 1575, 975, 515, 1023, 813,
     874, 1203, 931, 1493, 1662, 1352, 549, 663, 654, 643, 1094, 1752, 862, 725, 1561, 826, 691, 536, 1218, 759,
-    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 583, 643, 1002, 636, 1371, 961, 498, 1540, 1379, 1412]
+    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 583, 643, 1002, 636, 1371, 961, 498, 1540, 1379, 1412,
+    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040]
 
 player_subs = {"P046": "P034", "P010": "P019", "P029": "P074", "P062": "P061",
 "P033": "P056", "P006": "P058", "P052": "P058", "P036": "P045", "P000": "P048", "P059": "P044",
@@ -63,7 +65,8 @@ class C6_class:
         self.e_dict = {"EVE_11": -4, "EVE_13": -3, "EVE_14": -2, "EVE_15": -1, "EVE_16": 0, "EVE_18": 1, 
                        "EVE_21": 2, "EVE_22": 3, "EVE_23": 4, "EVE_25": 5, "EVE_26": 6, "EVE_27": 7, "EVE_29": 8,
                        "EVE_31": 9, "EVE_33": 10, "EVE_34": 11, "EVE_35": 12, "EVE_36": 13, "EVE_37": 14, 
-                       "EVE_38": 15, "EVE_40": 16, "EVE_41": 17, "EVE_43": 18, "EVE_44": 19, "CUR": 20}
+                       "EVE_38": 15, "EVE_40": 16, "EVE_41": 17, "EVE_43": 18, "EVE_44": 19, "EVE_45": 20,
+                       "CUR": 21}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results, _ = predict(self.pdict, self.e_dict[event], roster=roster)
@@ -149,7 +152,7 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
             continue
 
         z = pdict[pla]
-        matrix.append([z.stat1[loc]/2, pow(z.stat1[loc]/2, 2), z.stat3[loc], pow(z.stat3[loc], 2), z.tstat1[loc], pow(z.tstat1[loc], 2),  
+        matrix.append([z.stat1[loc]*2/3, pow(z.stat1[loc]*2/3, 2), z.stat3[loc], pow(z.stat3[loc], 2), z.tstat1[loc], pow(z.tstat1[loc], 2),  
                 z.stat4[loc], pow(z.stat4[loc], 2), z.stat5[loc], pow(z.stat5[loc], 2), z.stat6[loc], z.tstat6[loc],
                 (z.stat3[loc]/z.stat5[loc]), pow(z.stat3[loc]/z.stat5[loc], 2), z.stat1[loc]/max(z.tstat1[loc], 1), z.stat3[loc]/max(z.stat4[loc], 1), 
                 z.stat7[loc], z.stat2[loc], 1, 3])
@@ -434,11 +437,12 @@ def fill_pdict(nc=False, event=None):
     return pdict
 
 def train(pdict, eve_num=None, decay=default_decay, d=default_d):
-    loc = 1
     matrix = []
 
     if(eve_num is None):
         eve_num = len(all_rosters) - 2
+    
+    loc = max(0,eve_num-10) + 1
 
     # initialize stat priors for every team in every event  
     for event in all_rosters[max(0,eve_num-10):2+eve_num]:
@@ -616,7 +620,7 @@ if __name__ == "__main__":
                 perfList.append([value[1], value[0] + key[-2:]])
     perfList = sorted(perfList, reverse=True)
 
-    val = cla.eve_pr("EVE_44")
+    val = cla.eve_pr("EVE_45")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):

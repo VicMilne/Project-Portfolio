@@ -30,7 +30,7 @@ def find_str(eve_num):
 
     return strengths
 
-event_select = [10,12,13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42]
+event_select = [10,12,13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42,43]
 
 # instantiate all_rosters by reading from file
 mypath = os.path.dirname(__file__)
