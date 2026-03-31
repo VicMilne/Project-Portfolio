@@ -8,35 +8,37 @@ import os.path
 ###
 
 full = ["EVE_1", "EVE_2", "EVE_3", "EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_10", "EVE_11", "EVE_12", "EVE_13",
-      "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_19", "EVE_20", "EVE_21", "EVE_22", "EVE_23", "EVE_24", "EVE_25", "EVE_26",
-      "EVE_27", "EVE_28", "EVE_29", "EVE_30", "EVE_31", "EVE_32", "EVE_33", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_38", 
-      "EVE_39", "EVE_40", "EVE_41", "EVE_42", "EVE_43", "EVE_44"]
+        "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_19", "EVE_20", "EVE_21", "EVE_22", "EVE_23", "EVE_24", "EVE_25", "EVE_26",
+        "EVE_27", "EVE_28", "EVE_29", "EVE_30", "EVE_31", "EVE_32", "EVE_33", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_38", 
+        "EVE_39", "EVE_40", "EVE_41", "EVE_42", "EVE_43", "EVE_44", "EVE_45"]
 m4_list = ["EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_10", "EVE_12", "EVE_13", "EVE_15", "EVE_16", "EVE_18",
-      "EVE_19", "EVE_21", "EVE_22", "EVE_24", "EVE_25", "EVE_26", "EVE_27", "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_36",
-      "EVE_39", "EVE_41", "EVE_43", "EVE_44"]
+           "EVE_19", "EVE_21", "EVE_22", "EVE_24", "EVE_25", "EVE_26", "EVE_27", "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_36",
+           "EVE_39", "EVE_41", "EVE_43", "EVE_44"]
 m3_list = ["EVE_1", "EVE_2", "EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_12", "EVE_14", "EVE_20", "EVE_23",
-      "EVE_28", "EVE_31", "EVE_36", "EVE_37", "EVE_39", "EVE_40", "EVE_42"]
-m6_list = ["EVE_30", "EVE_32", "EVE_35", "EVE_38", "EVE_39", "EVE_41", "EVE_43"]
+           "EVE_28", "EVE_31", "EVE_36", "EVE_37", "EVE_39", "EVE_40", "EVE_42", "EVE_45"]
+m6_list = ["EVE_30", "EVE_32", "EVE_35", "EVE_38", "EVE_39", "EVE_41", "EVE_43", "EVE_45"]
 m5_list = ["EVE_11", "EVE_13", "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_21", "EVE_22", "EVE_23", "EVE_25", "EVE_26", "EVE_27",
-           "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_38", "EVE_40", "EVE_41", "EVE_43", "EVE_44"]
+           "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_38", "EVE_40", "EVE_41", "EVE_43", "EVE_44",
+           "EVE_45"]
 
 eve_list_m1 = ["EVE_1", "EVE_3", "EVE_4", "EVE_5", "EVE_6", "EVE_9", "EVE_11", "EVE_13", "EVE_14", "EVE_15", "EVE_18",
-            "EVE_19", "EVE_21", "EVE_24", "EVE_25", "EVE_27", "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_37",
-            "EVE_39", "EVE_41", "EVE_42", "EVE_43", "EVE_44"]
+               "EVE_19", "EVE_21", "EVE_24", "EVE_25", "EVE_27", "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_37",
+               "EVE_39", "EVE_41", "EVE_42", "EVE_43", "EVE_44"]
 
 eve_list_m2 = ["EVE_1", "EVE_3", "EVE_6", "EVE_8", "EVE_10", "EVE_11", "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_19", 
-            "EVE_21", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_39", "EVE_42", "EVE_43"]
+               "EVE_21", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_39", "EVE_42", "EVE_43"]
 
 eve_list_m8 = ["EVE_3", "EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_10", "EVE_11", "EVE_14", "EVE_18", 
-            "EVE_19", "EVE_20", "EVE_21", "EVE_22", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_40",
-            "EVE_42", "EVE_43", "EVE_44"]
+               "EVE_19", "EVE_20", "EVE_21", "EVE_22", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_40",
+               "EVE_42", "EVE_43", "EVE_44", "EVE_45"]
 
 eve_list_m7 = ["EVE_1", "EVE_3", "EVE_4", "EVE_7", "EVE_9", "EVE_10", "EVE_11", "EVE_13", "EVE_15", "EVE_19", "EVE_22",
-            "EVE_26", "EVE_28", "EVE_31", "EVE_37", "EVE_39", "EVE_43"]
+               "EVE_26", "EVE_28", "EVE_31", "EVE_37", "EVE_39", "EVE_43"]
 
 # External Sourced Stats
 eve_list_m9 = ["EVE_1", "EVE_3", "EVE_4", "EVE_5", "EVE_8", "EVE_9", "EVE_10", "EVE_13", "EVE_14", "EVE_16", "EVE_18", 
-            "EVE_19", "EVE_21", "EVE_24", "EVE_26", "EVE_27", "EVE_30", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_42", "EVE_44"]
+               "EVE_19", "EVE_21", "EVE_24", "EVE_26", "EVE_27", "EVE_30", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_42", "EVE_44",
+               "EVE_45"]
 eve_list_mA = ["EVE_13", "EVE_20", "EVE_23", "EVE_26", "EVE_28", "EVE_29", "EVE_30", "EVE_31", "EVE_35", "EVE_40", "EVE_42", "EVE_44"]
 
 # compute time decayed average going into each event in contest_list
