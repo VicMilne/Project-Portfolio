@@ -87,6 +87,7 @@ class C6_class:
             weights = train(self.pdict, d=[1, 7, 9, 10, 12, 13, 14, 16])
             return eve_pr_calc(dict_nc, -4, weights, d=[1, 7, 9, 10, 12, 13, 14, 16])
         
+        ind = min(max(7, self.e_dict[event]+2), self.e_dict["CUR"])
         weights = train(self.pdict, d=[1, 7, 9, 10, 12, 13, 14, 16])
         return eve_pr_calc(self.pdict, self.e_dict[event], weights, [1, 7, 9, 10, 12, 13, 14, 16])
 

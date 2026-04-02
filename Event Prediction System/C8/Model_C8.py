@@ -117,7 +117,8 @@ class C8_class:
         return results_indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        weights = train(self.pdict, self.eve_str, d=[7, 8, 9, 13, 14])
+        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str, eve_num=ind, d=[7, 8, 9, 13, 14])
         if(event in ["EVE_17", "EVE_23"]):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
@@ -891,13 +892,13 @@ if __name__ == "__main__":
 
     pdict = cla.pdict
 
-    # perfList = []
-    # for key in cla.e_dict:
-    #     if(key != "CUR"):
-    #         val = cla.eve_pr(key)
-    #         for value in val:
-    #             perfList.append([value[1], value[0] + key[-2:]])
-    # perfList = sorted(perfList, reverse=True)
+    perfList = []
+    for key in cla.e_dict:
+        if(key != "CUR"):
+            val = cla.eve_pr(key)
+            for value in val:
+                perfList.append([value[1], value[0] + key[-2:]])
+    perfList = sorted(perfList, reverse=True)
 
     # test eve_pr
     val = cla.eve_pr("EVE_45")

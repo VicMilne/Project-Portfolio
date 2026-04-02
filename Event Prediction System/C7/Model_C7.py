@@ -72,7 +72,8 @@ class C7_class:
         return results_indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        weights = train(self.pdict, d=[4,6,7,8,9,10,11])
+        ind = min(max(6, self.e_dict[event]+2), self.e_dict["CUR"])
+        weights = train(self.pdict, eve_num=ind, d=[4,6,7,8,9,10,11])
         if(event in ["EVE_2", "EVE_12", "EVE_17", "EVE_23"]):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)

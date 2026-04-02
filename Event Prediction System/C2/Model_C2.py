@@ -108,7 +108,8 @@ class C2_class:
                 val[1] = int((val[1] - 250)*0.85 + 250)
             return eval_pr
 
-        weights = train(self.pdict, self.eve_str, d=[1, 4, 5, 7, 10, 13])
+        ind = min(max(4, self.e_dict[event]+2), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str, eve_num=ind, d=[1, 4, 5, 7, 10, 13])
         eval_pr = eve_pr_calc(self.pdict, self.e_dict[event], weights, d=[1, 4, 5, 7, 10, 13])
         return eval_pr
 

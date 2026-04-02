@@ -135,7 +135,8 @@ class C1_class:
         return results
     # computes and returns single event player scores
     def eve_pr(self, event):
-        weights = train(self.pdict, self.eve_str)
+        ind = min(max(3, self.e_dict[event]+6), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str, ind)
         if(event in ["EVE_2", "EVE_7", "EVE_12", "EVE_17", "EVE_23", "EVE_32", "EVE_36", "EVE_44"]):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)

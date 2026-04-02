@@ -72,14 +72,15 @@ player_subs = {"P135": "P035", "P004": "P062", "P047": "P057", "P157": "P097", "
 "P210": "P063", "P213": "P030", "P220": "P032", "P221": "P064", "P219": "P028", "P202": "P141", 
 "P222": "P012", "P215": "P097", "P216": "P096", "P217": "P096", "P218": "P097", "P223": "P011",
 "P224": "P060", "P225": "P077", "P105": "P096", "P226": "P051", "P124": "P011", "P227": "P012",
-"P231": "P010", "P142": "P059", "P214": "P011"
+"P231": "P010", "P142": "P059", "P214": "P011", "P104": "P022"
 }
 
 new_players = {"P117", "P107", "P105", "P135", "P136", "P146", "P071", "P198", "P199", 
                "P203", "P077", "P221", "P225", "P105"}
 non_players = {"P158", "P161", "P160", "P159", "P162", "P164", "P165", "P163", 
                "P157", "P166", "P169", "P120", "P170", "P172", "P171", "P154", "P139", 
-               "P177", "P152", "P197", "P205", "P099", "P146", "P218", "P216", "P217", "P215"}
+               "P177", "P152", "P197", "P205", "P099", "P146", "P218", "P216", "P217", "P215",
+               "P082"}
 
 class C3_class:
     def __init__(self):
@@ -108,7 +109,9 @@ class C3_class:
         if(event == "EVE_32"):
             return nceve1
         
-        eve_pr = eve_pr_calc(self.pdict, self.e_dict[event])
+        ind = min(max(13, self.e_dict[event]+2), self.e_dict["CUR"])
+        weights = train(self.pdict, e_num=ind, d=[1,3,4])
+        eve_pr = eve_pr_calc(self.pdict, self.e_dict[event], weights, d=[1,3,4])
         return eve_pr
 
 #############################################################################################
@@ -140,8 +143,7 @@ class Player:
         self.stat4 = []
         self.stat5 = []
 
-def eve_pr_calc(pdict, eve, d=default_d):
-    weights = train(pdict)
+def eve_pr_calc(pdict, eve, weights, d=default_d):
     # use either the current event, or for earlier events use event 6
     loc = max(eve, 6) - 5
     plist = []
@@ -153,9 +155,10 @@ def eve_pr_calc(pdict, eve, d=default_d):
         tots = 0
         ind_scores = []
         for pla in team:
-            vec = get_pla_stats(pdict, pla, loc)
             if(pla in non_players):
-                vec[0] = pdict["P097"].share[loc]
+                vec = get_pla_stats(pdict, "P097", loc)
+            else:
+                vec = get_pla_stats(pdict, pla, loc)
             
             if(e_num <= 5 and 5 not in d):
                 d.append(5)
@@ -464,8 +467,17 @@ if __name__ == "__main__":
     cla = C3_class()
     pdict = cla.pdict
 
+    # all events leaderboard code
+    perfList = []
+    for key in cla.e_dict:
+        if(key != "CUR"):
+            val = cla.eve_pr(key)
+            for value in val:
+                perfList.append([value[1], value[0] + key[-2:]])
+    perfList = sorted(perfList, reverse=True)
+
     # eve_pr test
-    val = cla.eve_pr("EVE_45")
+    val = cla.eve_pr("EVE_1")
 
     # if current event, return pr
     if(cla.e_dict["CUR"] == e_num):

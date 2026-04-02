@@ -103,7 +103,9 @@ class C4_class:
         if(event in ["EVE_17"]):
             return get_scores(event)
         
-        eve_pr = eve_pr_calc(self.pdict, self.popt, self.e_dict[event])
+        ind = min(max(15, self.e_dict[event]+2), self.e_dict["CUR"])
+        weights = train(self.pdict, self.popt, e_num=ind, d=[])
+        eve_pr = eve_pr_calc(self.pdict, self.popt, self.e_dict[event], weights, d=[])
         return eve_pr
 
 #############################################################################################
@@ -157,9 +159,7 @@ def get_scores(eve):
 
     return None
 
-def eve_pr_calc(pdict, popt, eve, d=default_d):
-    weights = train(pdict, popt)
-
+def eve_pr_calc(pdict, popt, eve, weights, d=default_d):
     # use either the current event, or for earlier events use event 5
     loc = max(eve, 5) - 5
     plist = []
@@ -555,6 +555,7 @@ if __name__ == "__main__":
             val = cla.eve_pr(key)
             for value in val:
                 perfList.append([value[1], value[0] + key[-3:]])
+    perfList = sorted(perfList, reverse=True)
 
     val = cla.eve_pr("EVE_39")
 
