@@ -8,10 +8,10 @@ import os.path
 decay = 0.8
 default_d = [1, 5]
 
-eve_num = 16
+eve_num = 17
 
 # numbered events where this contest appeared
-event_select = [5, 7, 9, 10, 13, 14, 15, 19, 22, 23, 24, 26, 28, 30, 31, 32, 36, 38, 42]
+event_select = [5, 7, 9, 10, 13, 14, 15, 19, 22, 23, 24, 26, 28, 30, 31, 32, 36, 38, 42, 43]
 
 results = [340, 224, 248, 264, 132, 104, 236, 232, 188, 56, 352, 280, 184, 520, 168, 442, 176, 12, 204, 76,
     376, 240, 394, 204, 616, 372, 28, 120, 292, 300, 236, 504, 212, 374, 176, 168, 386, 60, 72, 480,
@@ -50,7 +50,9 @@ results = [340, 224, 248, 264, 132, 104, 236, 232, 188, 56, 352, 280, 184, 520, 
     304, 208, 176, 108, 446, 324, 244, 112, 656, 292, 152, 48, 252, 320, 320, 140, 563, 414, 128, 12,
     368, 356, 318, 88, 397, 228, 64, 80, 240, 272, 132, 208, 300, 216, 360, 152, 390, 68, 180, 328,
     287, 294, 222, 236, 318, 350, 13, 209, 227, 177, 157, 120, 436, 65, 87, 135, 320, 168, 277, 220,
-    473, 258, 227, 58, 595, 390, 285, 153, 478, 228, 81, 63, 229, 244, 121, 128, 327, 128, 253, 189
+    473, 258, 227, 58, 595, 390, 285, 153, 478, 228, 81, 63, 229, 244, 121, 128, 327, 128, 253, 189,
+    377, 275, 145, 147, 464, 273, 103, 76, 261, 274, 118, 63, 255, 201, 362, 91, 484, 186, 275, 117,
+    243, 272, 217, 77, 294, 223, 108, 189, 310, 295, 137, 54, 338, 423, 115, 127, 535, 258, 166, 72
     ]
 
 pr_preds = [249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249,
@@ -84,7 +86,9 @@ pr_preds = [249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249, 249
     248, 280, 232, 182, 420, 348, 186, 83, 412, 370, 187, 32, 282, 357, 294, 83, 548, 207, 186, 83,
     285, 309, 229, 104, 470, 271, 286, 95, 417, 216, 94, 244, 375, 240, 186, 161, 309, 287, 174, 186,
     227, 130, 266, 135, 349, 244, 189, 163, 462, 210, 178, 75, 382, 160, 283, 30, 392, 271, 286, 224,
-    490, 227, 254, 117, 484, 425, 175, 38, 609, 318, 12, 108, 327, 346, 300, 75, 389, 379, 175, 55
+    490, 227, 254, 117, 484, 425, 175, 38, 609, 318, 12, 108, 327, 346, 300, 75, 389, 379, 175, 55,
+    249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,
+    249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,249,
     ]
 
 player_subs = {"P115": "P019", "P106": "P019", "P059": "P061", "P036": "P061", "P058": "P051", "P024": "P033",
@@ -110,7 +114,8 @@ player_subs = {"P115": "P019", "P106": "P019", "P059": "P061", "P036": "P061", "
                   "P204": "P016", "P212": "P097", "P213": "P005", "P214": "P011", "P202": "P136", "P223": "P036",
                   "P224": "P060", "P225": "P077", "P105": "P019", "P226": "P030", "P227": "P054", "P220": "P057",
                   "P219": "P011", "P149": "P009", "P078": "P005", "P231": "P060", "P232": "P027", "P200": "P059", 
-                  "P208": "P016", "P203": "P056", "P186": "P019", "P233": "P009", "P079": "P030"
+                  "P208": "P016", "P203": "P056", "P186": "P019", "P233": "P009", "P079": "P030",
+                  "P061": "P012"
                   }
 
 class C5_class:
@@ -120,7 +125,7 @@ class C5_class:
         self.e_dict = {"EVE_3": -5, "EVE_5": -4, "EVE_6": -3, "EVE_8": -2, "EVE_10": -1, "EVE_11": 0,
                        "EVE_14": 1, "EVE_15": 2, "EVE_16": 3, "EVE_21": 4, "EVE_24": 5, "EVE_25": 6, "EVE_26": 7,
                        "EVE_28": 8, "EVE_30": 9, "EVE_32": 10, "EVE_33": 11, "EVE_34": 12, "EVE_38": 13, 
-                       "EVE_44": 15, "CUR": 16}
+                       "EVE_44": 15, "EVE_45": 16, "CUR": 17}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -135,7 +140,8 @@ class C5_class:
         return results
     # computes and returns single event player scores
     def eve_pr(self, event):
-        weights = train(self.pdict, self.eve_str, d=[4,5])
+        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str,  d=[4,5])
         if(event in ["EVE_1", "EVE_2", "EVE_12", "EVE_17", "EVE_40"]):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
@@ -357,6 +363,7 @@ def fill_pdict(nc=False, event=None):
 
         # read in results for all 3 rounds
         for j in range(len(rounds)):
+            best_pla = ""
             aver = 0
             maxi = 0
             lines = rounds[j].split("\n")
@@ -368,6 +375,8 @@ def fill_pdict(nc=False, event=None):
                 for i in range(4):
                     pla = values[i*3]
                     pdict[pla].rounds[enum][j] = 41 - float(values[i*3+1][2:-1])
+                    if(values[i*3+1][2:-1] == "1"):
+                        best_pla = pla
                     if(j == 0):
                         pdict[pla].time[enum] = 0
                         pdict[pla].t8[enum] = 0
@@ -388,8 +397,8 @@ def fill_pdict(nc=False, event=None):
             for data in temp_data:
                 std += pow(data[1] - aver, 2)
                 # add additional time to winner
-                if(data[1] == maxi):
-                    data[1] += 20
+                if(data[0] == best_pla):
+                    data[1] += 15
             std = pow(std/40, 1/2)
 
             # get the 8th and 4th best times
@@ -587,15 +596,16 @@ if __name__ == "__main__":
     cla = C5_class()
     pdict = cla.pdict
 
-    # perfList = []
-    # for key in cla.e_dict:
-    #     if(key != "CUR"):
-    #         val = cla.eve_pr(key)
-    #         for value in val:
-    #             perfList.append([value[1], value[0] + key[-2:]])
+    perfList = []
+    for key in cla.e_dict:
+        if(key != "CUR"):
+            val = cla.eve_pr(key)
+            for value in val:
+                perfList.append([value[1], value[0] + key[-2:]])
+    perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_44")
+    val = cla.eve_pr("EVE_33")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):
