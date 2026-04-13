@@ -100,6 +100,7 @@ class C8_class:
                     "EVE_21": 5, "EVE_22": 6, "EVE_24": 7, "EVE_25": 8, "EVE_28": 9, "EVE_29": 10, 
                     "EVE_30": 11, "EVE_35": 12, "EVE_37": 13, "EVE_40": 14, "EVE_42": 15, "EVE_43": 16,
                     "EVE_44": 17, "EVE_45": 18, "CUR": 19}
+        self.nc_eves = {"EVE_17": 3, "EVE_23": 8}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.eve_str, self.e_dict[event], roster=roster)
@@ -117,13 +118,14 @@ class C8_class:
         return results_indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
-        weights = train(self.pdict, self.eve_str, eve_num=ind, d=[7, 8, 9, 13, 14])
-        if(event in ["EVE_17", "EVE_23"]):
+        if(event in self.nc_eves):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
+            weights = train(self.pdict, self.eve_str, self.nc_eves[event], d=[7, 8, 9, 13, 14])
             return eve_pr_calc(dict_nc, -8, weights, d=[7, 8, 9, 13, 14])
-
+        
+        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str, eve_num=ind, d=[7, 8, 9, 13, 14])
         return eve_pr_calc(self.pdict, self.e_dict[event], weights, d = [7, 8, 9, 13, 14])
 
 #############################################################################################

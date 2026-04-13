@@ -121,6 +121,8 @@ class C1_class:
                        "EVE_19": 0, "EVE_21": 1, "EVE_24": 2, "EVE_25": 3, "EVE_27": 4, "EVE_29": 5, 
                        "EVE_31": 6, "EVE_33": 7, "EVE_34": 8, "EVE_37": 9, "EVE_39": 10, "EVE_41": 11,
                        "EVE_42": 12, "EVE_43": 13, "CUR": 15}
+        self.nc_eves = {"EVE_2": 5, "EVE_7": 5, "EVE_12": 5, "EVE_17": 5, "EVE_23": 5, "EVE_32": 9,
+                        "EVE_36": 11, "EVE_44": 15, "EVE_46": 15}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -135,14 +137,15 @@ class C1_class:
         return results
     # computes and returns single event player scores
     def eve_pr(self, event):
-        ind = min(max(3, self.e_dict[event]+6), self.e_dict["CUR"])
-        weights = train(self.pdict, self.eve_str, ind)
-        if(event in ["EVE_2", "EVE_7", "EVE_12", "EVE_17", "EVE_23", "EVE_32", "EVE_36", "EVE_44"]):
+        if(event in self.nc_eves):
             # need the uncounted data for the above events
+            weights = train(self.pdict, self.eve_str, self.nc_eves[event])
             dict_nc = fill_pdict(True, event)
             eval_pr = eve_pr_calc(dict_nc, -11, weights)
             return eval_pr
         
+        ind = min(max(3, self.e_dict[event]+6), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str, ind)
         return eve_pr_calc(self.pdict, self.e_dict[event], weights)
     
 #########################################################################################################
@@ -562,8 +565,8 @@ def generate_pr(pdict, eve_str, decay=0.9, d=default_d):
         m = 30 / (30 - x)
         b = 30 - 30*m
         for i in range(len(pr)):
-            if(pr[i] < 30):
-                pr[i] = pr[i]*m + b
+            if(pr[i][1] < 30):
+                pr[i][1] = pr[i][1]*m + b
 
     # normalize scores such that the average of the playerbase is 250
     # weighted by the player freqs
@@ -593,7 +596,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_37")
+    val = cla.eve_pr("EVE_44")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):

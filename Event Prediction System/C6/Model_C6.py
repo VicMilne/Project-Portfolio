@@ -57,7 +57,8 @@ player_subs = {"P046": "P034", "P010": "P019", "P029": "P074", "P062": "P061",
 "P224": "P055", "P225": "P141", "P105": "P051", "P226": "P038", "P227": "P064", "P220": "P054", 
 "P219": "P054", "P230": "P056", "P228": "P012", "P229": "P136", "P130": "P063", "P021": "P062",
 "P231": "P032", "P177": "P038", "P014": "P006", "P061": "P044", "P056": "P015", "P233": "P044",
-"P079": "P026", "P186": "P015", "P072": "P060", "P208": "P073", "P232": "P202"}
+"P079": "P026", "P186": "P015", "P072": "P060", "P208": "P073", "P232": "P202",
+"P012": "P060"}
 
 class C6_class:
     def __init__(self):
@@ -67,6 +68,7 @@ class C6_class:
                        "EVE_31": 9, "EVE_33": 10, "EVE_34": 11, "EVE_35": 12, "EVE_36": 13, "EVE_37": 14, 
                        "EVE_38": 15, "EVE_40": 16, "EVE_41": 17, "EVE_43": 18, "EVE_44": 19, "EVE_45": 20,
                        "CUR": 21}
+        self.nc_eves = {"EVE_17": 6}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results, _ = predict(self.pdict, self.e_dict[event], roster=roster)
@@ -81,10 +83,10 @@ class C6_class:
         return results
     # computes and returns single event player scores
     def eve_pr(self, event):
-        if(event in ["EVE_17"]):
+        if(event in self.nc_eves):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
-            weights = train(self.pdict, d=[1, 7, 9, 10, 12, 13, 14, 16])
+            weights = train(self.pdict, self.nc_eves[event], d=[1, 7, 9, 10, 12, 13, 14, 16])
             return eve_pr_calc(dict_nc, -4, weights, d=[1, 7, 9, 10, 12, 13, 14, 16])
         
         ind = min(max(7, self.e_dict[event]+2), self.e_dict["CUR"])

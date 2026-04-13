@@ -55,6 +55,7 @@ class C7_class:
         self.e_dict = {"EVE_1": -5, "EVE_3": -4, "EVE_4": -3, "EVE_7": -2, "EVE_9": -1, "EVE_10": 0,
                        "EVE_11": 1, "EVE_13": 2, "EVE_15": 3, "EVE_19": 4, "EVE_22": 5, "EVE_26": 6, 
                        "EVE_28": 7, "EVE_31": 8, "EVE_37": 9, "EVE_39": 10, "EVE_43": 11, "CUR": 12}
+        self.nc_eves = {"EVE_2": 4, "EVE_12": 4, "EVE_17": 6, "EVE_23": 8}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], roster=roster)
@@ -72,13 +73,15 @@ class C7_class:
         return results_indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        ind = min(max(6, self.e_dict[event]+2), self.e_dict["CUR"])
-        weights = train(self.pdict, eve_num=ind, d=[4,6,7,8,9,10,11])
-        if(event in ["EVE_2", "EVE_12", "EVE_17", "EVE_23"]):
+        if(event in self.nc_eves):
+            weights = train(self.pdict, eve_num=self.nc_eves[event], d=[6,7,8,9,10,11])
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
-            return eve_pr_calc(dict_nc, -5, weights, d=[4,6,7,8,9,10,11])
-        return eve_pr_calc(self.pdict, self.e_dict[event], weights, d = [4,6,7,8,9,10,11])
+            return eve_pr_calc(dict_nc, -5, weights, d=[6,7,8,9,10,11])
+        
+        ind = min(max(6, self.e_dict[event]+2), self.e_dict["CUR"])
+        weights = train(self.pdict, eve_num=ind, d=[6,7,8,9,10,11])
+        return eve_pr_calc(self.pdict, self.e_dict[event], weights, d = [6,7,8,9,10,11])
 
 #############################################################################################
 # instantiate all_rosters by reading from file
@@ -178,13 +181,13 @@ def eve_pr_calc(pdict, eve, ans, d=default_d):
         if(nh == 0):
             x1, x2, x3, x4 = 1/3, 0, 11/54, 1
         elif(nh == 1):
-            x1, x2, x3, x4 = 17/54, 1/6, 12/54, 8/11
+            x1, x2, x3, x4 = 8/27, 1/9, 12/54, 8/11
         elif(nh == 2):
-            x1, x2, x3, x4 = 8/27, 2/9, 13/54, 7/13
+            x1, x2, x3, x4 = 7/27, 2/9, 13/54, 7/13
         elif(nh == 3):
-            x1, x2, x3, x4 = 15/54, 1/3, 14/54, 6/15
+            x1, x2, x3, x4 = 6/27, 3/9, 14/54, 6/15
         else:
-            x1, x2, x3, x4 = 7/27, 7/18, 15/54, 5/17
+            x1, x2, x3, x4 = 5/27, 4/9, 15/54, 5/17
         # initialize combined stats using implied "average" result (=1) for other half of equation
         comb_ind = stat3 * x4 + (1/z.stat13[loc]) * (1-x4)
         comb_tot = stat2 * x4 + (1/z.stat13[loc]) * (1-x4)

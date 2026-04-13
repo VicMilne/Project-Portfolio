@@ -83,6 +83,8 @@ class C2_class:
                        "EVE_14": 0, "EVE_15": 1, "EVE_16": 2, "EVE_18": 3, "EVE_19": 4, "EVE_21": 5, "EVE_24": 6, 
                        "EVE_25": 7, "EVE_28": 8, "EVE_29": 9, "EVE_30": 10, "EVE_35": 11, "EVE_37": 12, 
                        "EVE_39": 13, "EVE_42": 14, "EVE_43": 15, "CUR": 16}
+        self.nc_eves = {"EVE_2": 4, "EVE_7": 5, "EVE_12": 5, "EVE_17": 7, "EVE_23": 8, "EVE_31": 11, 
+                        "EVE_36": 13, "EVE_40": 15, "EVE_44": 16}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -97,11 +99,11 @@ class C2_class:
         return results
     # computes and returns single event player scores
     def eve_pr(self, event):
-        if(event in ["EVE_2", "EVE_7", "EVE_12", "EVE_17", "EVE_23", "EVE_31", "EVE_36", "EVE_40", "EVE_44"]):
+        if(event in self.nc_eves):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
 
-            weights = train(self.pdict, self.eve_str, d=[2,3,6,7,9,12,13])
+            weights = train(self.pdict, self.eve_str, self.nc_eves[event], d=[2,3,6,7,9,12,13])
             eval_pr = eve_pr_calc(dict_nc, -6, weights, d=[2,3,6,7,9,12,13])
             # uncounted events have more variance, reduce std of scores
             for val in eval_pr:
@@ -225,7 +227,7 @@ def build_player(pdict, loc, pla, eve_str, decay):
         
         value = pdict[pla].stat1[inc]
 
-        # if player stats for event don't exists (== -1) skip
+        # if player stats for event don't exist (== -1) skip
         if value != -1:
             # adjustment for event comp
             value *= eve_str[inc]/eve_str[loc+1]
@@ -376,7 +378,6 @@ def fill_pdict(nc=False, event=None):
                 # if not counted, initialize player with 1 entry per stat, else number of events
                 pdict[name] = Player(1 if nc else len(events))
        
-
             # append all stats for the player in the event
             pdict[name].stat1[e_num] = float(words[1])
             pdict[name].stat2[e_num] = float(words[2])
@@ -385,7 +386,7 @@ def fill_pdict(nc=False, event=None):
             pdict[name].tstat1[e_num] = float(words[4])
             pdict[name].tstat2[e_num] = float(words[5])
             pdict[name].stat4[e_num] = (float(words[1])+0.3) / (float(words[4])+1.2)
-            pdict[name].stat5[e_num] = float(words[2]) / float(words[5])
+            pdict[name].stat5[e_num] = float(words[2]) / max(float(words[5]), 0.01)
             stat2s.append(float(words[2]))
             plas.append(name)
 
@@ -630,6 +631,7 @@ if __name__ == "__main__":
             val = cla.eve_pr(key)
             for value in val:
                 perfList.append([value[1], value[0] + key[-2:]])
+    perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
     val = cla.eve_pr("EVE_18")

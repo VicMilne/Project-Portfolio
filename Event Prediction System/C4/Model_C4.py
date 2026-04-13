@@ -100,7 +100,7 @@ class C4_class:
         return indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        if(event in ["EVE_17"]):
+        if(event in ["EVE_17", "EVE_46"]):
             return get_scores(event)
         
         ind = min(max(15, self.e_dict[event]+2), self.e_dict["CUR"])
@@ -149,12 +149,13 @@ def get_scores(eve):
         lines = event.split("\n")
         # select correct event
         if(lines[0] == eve):
-            # compute scores for each player by equally dividing team score
+            # read scores for each player
             scores = [int(x) for x in lines[2].split(", ")]
             plas = lines[1].split(", ")
             eve_pr = []
             for i in range(len(plas)):
-                eve_pr.append([plas[i], round(scores[int(i/4)]/4)])
+                eve_pr.append([plas[i], scores[i]])
+            eve_pr = sorted(eve_pr, key=lambda x: x[1], reverse=True)
             return eve_pr
 
     return None

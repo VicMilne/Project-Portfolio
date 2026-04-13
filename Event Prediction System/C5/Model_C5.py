@@ -5,7 +5,7 @@ import os.path
 
 # Consistently Updated Globals and Classes
 
-decay = 0.8
+default_decay = 0.8
 default_d = [1, 5]
 
 eve_num = 17
@@ -126,6 +126,7 @@ class C5_class:
                        "EVE_14": 1, "EVE_15": 2, "EVE_16": 3, "EVE_21": 4, "EVE_24": 5, "EVE_25": 6, "EVE_26": 7,
                        "EVE_28": 8, "EVE_30": 9, "EVE_32": 10, "EVE_33": 11, "EVE_34": 12, "EVE_38": 13, 
                        "EVE_44": 15, "EVE_45": 16, "CUR": 17}
+        self.nc_eves = {"EVE_1": 4, "EVE_2": 4, "EVE_12": 5, "EVE_17": 6, "EVE_40": 15}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -140,12 +141,13 @@ class C5_class:
         return results
     # computes and returns single event player scores
     def eve_pr(self, event):
-        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
-        weights = train(self.pdict, self.eve_str,  d=[4,5])
-        if(event in ["EVE_1", "EVE_2", "EVE_12", "EVE_17", "EVE_40"]):
+        if(event in self.nc_eves):
+            weights = train(self.pdict, self.eve_str, self.nc_eves[event], d=[4,5])
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
             return eve_pr_calc(dict_nc, -5, weights,d=[4,5])
+        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
+        weights = train(self.pdict, self.eve_str, ind, d=[4,5])
         return eve_pr_calc(self.pdict, self.e_dict[event], weights, d=[4,5])
 
 # instantiate all_rosters by reading from file
@@ -462,7 +464,7 @@ def compute_eve_str(pdict, decay=0.9):
 
     return new_eve_str
 
-def train(pdict, eve_str, eve_num=None, decay=0.8, d=default_d):
+def train(pdict, eve_str, eve_num=None, decay=default_decay, d=default_d):
     loc = 1
     matrix = []
 
@@ -488,14 +490,14 @@ def train(pdict, eve_str, eve_num=None, decay=0.8, d=default_d):
     matrix = np.delete(matrix, d, axis=1)
 
     # solving for the weight vector
-    matrix1 = matrix[0:120+eve_num*40]
+    matrix1 = matrix[:120+eve_num*40]
     tmatrix1 = np.transpose(matrix1)
     fmatrix1 = np.matmul(np.linalg.inv(np.matmul(tmatrix1, matrix1)), tmatrix1)
     weights = np.matmul(fmatrix1, results[0:120+eve_num*40])
 
     return weights
 
-def predict(pdict, eve_num, eve_str, decay=0.8, d=default_d, roster=None):
+def predict(pdict, eve_num, eve_str, decay=default_decay, d=default_d, roster=None):
     weights = train(pdict, eve_str, eve_num, decay, d)
 
     # if roster is supplied, override event #eve_num with roster
@@ -536,7 +538,7 @@ def predict(pdict, eve_num, eve_str, decay=0.8, d=default_d, roster=None):
         
     return result
 
-def generate_pr(pdict, eve_str, decay=0.8, d=default_d):
+def generate_pr(pdict, eve_str, decay=default_decay, d=default_d):
     weights = train(pdict, eve_str, decay=decay, d=d)
 
     matrix_pr = []
@@ -609,14 +611,14 @@ if __name__ == "__main__":
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):
-        pr = generate_pr(pdict, cla.eve_str, decay, default_d)
+        pr = generate_pr(pdict, cla.eve_str, default_decay, default_d)
         string = ""
         for player in pr:
             string = string + (player[0] + "\t" + str(player[1]) + "\n")
         
         check = 0
     else:
-        scores = predict(pdict, eve_num, cla.eve_str, decay, default_d)
+        scores = predict(pdict, eve_num, cla.eve_str, default_decay, default_d)
 
         # for simulated events, check against true results for mse accuracy
         results_test = results[120+eve_num*40:160+eve_num*40]
