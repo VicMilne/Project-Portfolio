@@ -124,9 +124,9 @@ class C5_class:
         self.eve_str = compute_eve_str(self.pdict)
         self.e_dict = {"EVE_3": -5, "EVE_5": -4, "EVE_6": -3, "EVE_8": -2, "EVE_10": -1, "EVE_11": 0,
                        "EVE_14": 1, "EVE_15": 2, "EVE_16": 3, "EVE_21": 4, "EVE_24": 5, "EVE_25": 6, "EVE_26": 7,
-                       "EVE_28": 8, "EVE_30": 9, "EVE_32": 10, "EVE_33": 11, "EVE_34": 12, "EVE_38": 13, 
+                       "EVE_28": 8, "EVE_30": 9, "EVE_33": 11, "EVE_34": 12, "EVE_38": 13, 
                        "EVE_44": 15, "EVE_45": 16, "CUR": 17}
-        self.nc_eves = {"EVE_1": 4, "EVE_2": 4, "EVE_12": 5, "EVE_17": 6, "EVE_40": 15}
+        self.nc_eves = {"EVE_1": 4, "EVE_2": 4, "EVE_12": 5, "EVE_17": 6, "EVE_32": 12, "EVE_40": 15}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -196,6 +196,10 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
     matrix = np.delete(matrix, d, axis=1)
 
     vals = np.matmul(matrix, weights)
+    
+    # normalize and round, then pair scores with players
+    f = 10000 / sum(vals)
+    vals *= f
 
     # formula for adjusting all event scores to be above 0, maintains relative positions
     x = min(vals)
@@ -205,12 +209,6 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
         for i in range(len(vals)):
             if(vals[i] < 30):
                 vals[i] = vals[i]*m + b
-    
-    # normalize and round, then pair scores with players
-    f = 10000 / sum(vals)
-    vals *= f
-
-    vals = [int((val-250)*1.25+250) for val in vals]
 
     for i in range(len(plist)):
         plist[i].append(float(round(vals[i])))
@@ -562,8 +560,7 @@ def generate_pr(pdict, eve_str, decay=default_decay, d=default_d):
     for i in range(len(pr)):
         pr[i].append(float(round(scores[i])))
 
-    pr = (sorted(pr,key=lambda x: (x[1])))
-    pr.reverse()
+    pr = sorted(pr,key=lambda x: (x[1]),reverse=True)
 
     # filter out players who aren't "current"
     f = open(os.path.join(os.path.split(os.path.dirname(__file__))[0], "current_list.txt"))
@@ -607,7 +604,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_33")
+    val = cla.eve_pr("EVE_1")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):

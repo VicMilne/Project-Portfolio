@@ -196,8 +196,8 @@ def eve_pr_calc(pdict, popt, eve, weights, d=default_d):
         # for very early events, smooth the players scores to reflect less confidence
         if(eve < 2):
             for k in range(4):
-                ind_scores[k] += 10*(2-eve)
-                tots += 10*(2-eve)
+                ind_scores[k] += 20*(2-eve)
+                tots += 20*(2-eve)
 
         j = 0
         # allocate points for team proportional to each members player score
@@ -558,7 +558,7 @@ if __name__ == "__main__":
                 perfList.append([value[1], value[0] + key[-3:]])
     perfList = sorted(perfList, reverse=True)
 
-    val = cla.eve_pr("EVE_39")
+    val = cla.eve_pr("EVE_4")
 
     # if current event, return pr
     if(cla.e_dict["CUR"] == e_num):

@@ -596,7 +596,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_44")
+    val = cla.eve_pr("EVE_21")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):

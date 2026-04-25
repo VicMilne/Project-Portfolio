@@ -475,7 +475,7 @@ def train(pdict, eve_num=None, decay=default_decay, d=default_d):
     # perform linear regression with regularization to prevent overfitting
     weights = [1000000]
     reg = 0
-    while(max(weights) > 1000 or min(weights) < -1000):
+    while(max(weights) > 150 or min(weights) < -150):
         ident = np.identity(len(matrix[0])) * reg
         tmatrix0 = np.transpose(matrix)
         fmatrix0 = np.matmul(np.linalg.inv(np.matmul(tmatrix0, matrix) + ident), tmatrix0)
@@ -623,7 +623,7 @@ if __name__ == "__main__":
                 perfList.append([value[1], value[0] + key[-2:]])
     perfList = sorted(perfList, reverse=True)
 
-    val = cla.eve_pr("EVE_45")
+    val = cla.eve_pr("EVE_41")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):
