@@ -9,10 +9,10 @@ from time import perf_counter
 default_decay = 0.9
 default_d = [0, 5, 6, 7, 10, 13]
 
-eve_num = 16
+eve_num = 18
 
 # numbered events where this contest appeared
-event_select = [7,9,10,13,14,15,16,17,19,22,23,26,27,28,33,35,37,40,41]
+event_select = [7,9,10,13,14,15,16,17,19,22,23,26,27,28,33,35,37,40,41,45,46]
 
 # team by team results for all events
 results = [1570, 795, 560, 910, 1380, 1980, 1200, 15, 910, 935,
@@ -33,7 +33,9 @@ results = [1570, 795, 560, 910, 1380, 1980, 1200, 15, 910, 935,
     1335, 1000, 1130, 1160, 910, 995, 1340, 340, 1055, 560,
     970, 1260, 1190, 780, 15, 1160, 1275, 1380, 1110, 685,
     1115, 865, 660, 720, 1145, 955, 1145, 1130, 970, 1540,
-    1220, 515, 1020, 850, 1775, 780, 705, 1980, 705, 620]
+    1220, 515, 1020, 850, 1775, 780, 705, 1980, 705, 620,
+    1065, 1365, 1235, 425, 925, 720, 895, 970, 1190, 1365,
+    1175, 515, 1615, 295, 1365, 1000, 1410, 1365, 605, 1335]
 
 # baseline predictions to compare against
 pr_preds = [988, 690, 721, 1556, 1013, 1595, 622, 1387, 1314, 413, 
@@ -51,7 +53,9 @@ pr_preds = [988, 690, 721, 1556, 1013, 1595, 622, 1387, 1314, 413,
     978, 815, 1754, 1180, 1142, 1252, 817, 1053, 1125, 299,
     938, 842, 1141, 1076, 231, 1522, 1296, 1383, 1228, 759,
     902, 903, 1503, 1030, 425, 982, 1433, 567, 1188, 1372,
-    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040]
+    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040,
+    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040,
+    940, 645, 1160, 470, 1130, 880, 1350, 1365, 1175, 1175]
 
 reduced_events = [18, 20]
 
@@ -72,19 +76,47 @@ player_subs = {"P135": "P084", "P047": "P061", "P099": "P127", "P096": "P127", "
                   "P215": "P097", "P218": "P143", "P217": "P012", "P216": "P027", "P210": "P030", "P219": "P055",
                   "P220": "P049", "P221": "P056", "P149": "P040", "P222": "P016", "P000": "P028", "P223": "P042",
                   "P225": "P202", "P224": "P044", "P227": "P098", "P231": "P060", "P105": "P015", "P226": "P027",
-                  "P139": "P051", "P140": "P073", "P214": "P022", "P142": "P001", "P022": "P001"
+                  "P139": "P051", "P140": "P073", "P214": "P022", "P142": "P001", "P022": "P001", "P255": "P144", 
+                  "P260": "P026", "P256": "P028", "P257": "P073", "P258": "P005", "P248": "P032", "P189": "P010", 
+                  "P259": "P016", "P148": "P000", "P208": "P141", "P293": "P040"
                   }
+
+fasts = {0: {5:["P012","P019","P118"], 4:["P022"], 1:["P042","P032","P060","P025","P018","P044","P084","P033"]},
+         1: {1:["P144"]}, 3: {3.5:["P022","P004","P047"], 3:["P064"], 1:["P084","P048"]}, 4: {2:["P029","P025","P019","P026"]}, 
+         6: {2:["P011","P044","P032","P002"], 1:["P061","P062","P033","P022","P012","P026"]},
+         7: {2: ["P046","P048","P033","P056"], 1:["P022","P042","P011","P057","P002"]},
+         8: {1: ["P046","P048","P008","P135"]}, 9: {3: ["P067","P099","P097"], 1.5: ["P096"]},
+         10: {3: ["P044"], 2: ["P054","P047","P030","P001","P062","P009","P026"]},
+         12: {2: ["P029", "P062", "P022", "P124", "P009", "P030"]},
+         14: {3:["P054","P025","P060","P057","P067","P096","P097"], 1.5:["P020"], 1:["P001","P049","P015","P027"]},
+         16: {3:["P072", "P002", "P016"], 1:["P001"]},
+         17: {6:["P029","P200"], 4:["P054","P025"], 3:["P044","P053","P060","P051"], 1:["P046","P040","P143","P141","P068","P067","P012","P077"]},
+         18: {7:["P042","P029","P035","P141"], 1:["P046","P032","P053","P203","P001","P054","P019","P026"]},
+         19: {4:["P040","P053","P141","P153"], 3:["P145","P149","P222","P038"], 1:["P001","P063","P010","P015","P034","P005","P019","P202"]},
+         20: {2:["P068","P223","P009","P097"], 1:["P034","P025","P210","P015","P020","P073","P118","P071","P028","P029","P051","P225","P042","P053","P227","P231"]},
+         21: {6:["P042","P026"], 5:["P044","P051"], 2:["P034","P055","P019","P016"]},
+         22: {5: ["P068", "P025", "P051", "P153"], 1: ["P145", "P255", "P260", "P225"]},
+         23: {1: ["P223", "P053", "P055", "P139", "P049", "P044", "P231", "P012"]}
+         }
+
+
+fasts_nc = {"EVE_7": {5:["P019","P118"], 4:["P022","P029"], 2:["P078","P057","P168"], 1:["P054"]},
+            "EVE_23": {3:["P059","P044","P063","P017"], 2:["P001","P067","P096","P097"], 1:["P042","P025","P023","P153"]},
+            "EVE_31": {4:["P032","P147","P155","P151"], 1:["P001","P063","P023","P016"]},
+            "EVE_36": {1:["P022","P011","P051","P077"]},
+            "EVE_40": {7:["P001","P124","P226","P038"], 4:["P042","P011","P067","P019","P029","P227","P030"], 3:["P098"], 1:["P022","P044","P005","P225","P046","P059"]}}
 
 class C2_class:
     def __init__(self):
         self.pdict = fill_pdict()
         self.eve_str = compute_eve_str(self.pdict)
+        self.pr_eve_str = compute_eve_str(self.pdict, 13)
         self.e_dict = {"EVE_1": -6, "EVE_3": -5, "EVE_6": -4, "EVE_8": -3, "EVE_10": -2, "EVE_11": -1,
                        "EVE_14": 0, "EVE_15": 1, "EVE_16": 2, "EVE_18": 3, "EVE_19": 4, "EVE_21": 5, "EVE_24": 6, 
                        "EVE_25": 7, "EVE_28": 8, "EVE_29": 9, "EVE_30": 10, "EVE_35": 11, "EVE_37": 12, 
-                       "EVE_39": 13, "EVE_42": 14, "EVE_43": 15, "CUR": 16}
-        self.nc_eves = {"EVE_2": 4, "EVE_7": 5, "EVE_12": 5, "EVE_17": 7, "EVE_23": 8, "EVE_31": 11, 
-                        "EVE_36": 13, "EVE_40": 15, "EVE_44": 16}
+                       "EVE_39": 13, "EVE_42": 14, "EVE_43": 15, "EVE_47": 16, "EVE_48": 17, "CUR": 18}
+        self.nc_eves = {"EVE_2", "EVE_7", "EVE_12", "EVE_17", "EVE_23", "EVE_31", "EVE_36", "EVE_40",
+                        "EVE_44", "EVE_51"}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -98,21 +130,32 @@ class C2_class:
         _, results = predict(self.pdict, self.e_dict["CUR"], self.eve_str, roster=roster)
         return results
     # computes and returns single event player scores
-    def eve_pr(self, event):
+    def eve_pr(self, event, d=[1,3,6,7,9,10,11,13]):
+        adj_dict = {}
         if(event in self.nc_eves):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
 
-            weights = train(self.pdict, self.eve_str, self.nc_eves[event], d=[2,3,6,7,9,12,13])
-            eval_pr = eve_pr_calc(dict_nc, -6, weights, d=[2,3,6,7,9,12,13])
+            if(event in fasts_nc):
+                for num in fasts_nc[event]:
+                    for pla in fasts_nc[event][num]:
+                        adj_dict[pla] = num
+
+
+            weights = train(self.pdict, self.pr_eve_str, 9, d=[2,3,6,7,9,12,13])
+            eval_pr = eve_pr_calc(dict_nc, 0, weights, adj_dict, d=[2,3,6,7,9,12,13])
             # uncounted events have more variance, reduce std of scores
             for val in eval_pr:
                 val[1] = int((val[1] - 250)*0.85 + 250)
             return eval_pr
 
-        ind = min(max(4, self.e_dict[event]+2), self.e_dict["CUR"])
-        weights = train(self.pdict, self.eve_str, eve_num=ind, d=[1, 4, 5, 7, 10, 13])
-        eval_pr = eve_pr_calc(self.pdict, self.e_dict[event], weights, d=[1, 4, 5, 7, 10, 13])
+        e_num = self.e_dict[event] + 6
+        if(e_num in fasts):
+            for num in fasts[e_num]:
+                for pla in fasts[e_num][num]:
+                    adj_dict[pla] = num
+        weights = train(self.pdict, self.pr_eve_str, 11, d=d)
+        eval_pr = eve_pr_calc(self.pdict, e_num, weights, adj_dict, d=d)
         return eval_pr
 
 #############################################################################################
@@ -122,6 +165,7 @@ mypath = os.path.dirname(__file__)
 txtfile = os.path.join(mypath[:-2], "All_Teamsets.txt")
 f = open(txtfile, 'r')
 lines = f.read().split("\n")
+f.close()
 teams = [x.split("|") for x in lines]
 all_rosters = [[x.split(", ") for x in y] for y in teams]
 
@@ -161,8 +205,7 @@ class eventPlayer:
         self.stat52 = 0
 
 # calculating pr for a particular event
-def eve_pr_calc(pdict, eve, weights, d=default_d):
-    loc = eve + 6
+def eve_pr_calc(pdict, loc, weights, adj_dict, d=default_d):
     matrix = []
     plist = []
 
@@ -171,22 +214,26 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
         if(pdict[pla].stat1[loc] == -1):
             continue
         z = pdict[pla]
-        a = 1
 
-        # if edge condition, buff player results
-        if(z.tstat2[loc] < 15 and z.stat3[loc] > 4):
-            a = 2.25 - min(0.75, z.stat5[loc])/0.75
+        if(pla in adj_dict):
+            a = adj_dict[pla]
+            per = (z.stat1[loc]+a*1+0.3)/(z.tstat1[loc]+a*3.2+1.2)
+            dper = (z.stat2[loc]+a*0.15)/max(z.tstat2[loc]+a*0.6, 0.1)
+        else:
+            a = 0
+            per = z.stat4[loc]
+            dper = z.stat5[loc]
 
-        matrix.append([z.stat1[loc]*a, pow(z.stat1[loc]*a, 2), z.stat2[loc]*a, pow(z.stat2[loc]*a, 2), z.tstat1[loc]*a, 
-                       pow(z.tstat1[loc]*a, 2), z.tstat2[loc]*a, pow(z.tstat2[loc]*a, 2), (4+z.stat3[loc])/2, pow((4+z.stat3[loc])/a/2, 2),  
-                z.stat4[loc], pow(z.stat4[loc], 2), z.stat5[loc], pow(z.stat5[loc], 2), 1, 1])
+        matrix.append([z.stat1[loc]+a*1, pow(z.stat1[loc]+a*1, 2), z.stat2[loc]+a*0.18, pow(z.stat2[loc]+a*0.18, 2), z.tstat1[loc]+a*3.2, 
+                       pow(z.tstat1[loc]+a*3.2, 2), z.tstat2[loc]+a*0.6, pow(z.tstat2[loc]+a*0.6, 2), z.stat3[loc]*0.5, pow(z.stat3[loc], 2),  
+                       per, pow(per, 2), dper, pow(dper, 2), 0.9, 1])
         plist.append([pla])
 
     
     matrix = np.delete(matrix, d, axis=1)
 
     # compute scores using weights vector
-    vals = np.matmul(matrix, weights)
+    vals = np.matmul(matrix/4, weights)
 
     # formula for adjusting all event scores to be above 0, maintains relative positions
     x = min(vals)
@@ -198,7 +245,7 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
                 vals[i] = vals[i]*m + b
 
     # normalize and round, then pair scores with players
-    f = 10000 / sum(vals)
+    f = 10250 / sum(vals)
     for i in range(len(plist)):
         plist[i].append(round(vals[i]*f))
 
@@ -222,7 +269,7 @@ def build_player(pdict, loc, pla, eve_str, decay):
         # increase decay for reduced_events or stat6 events
         revert = False
         if(inc-1 in reduced_events or pdict[pla].stat6[inc] == 1):
-            depth = depth + 7
+            depth = depth + 9
             revert = True
         
         value = pdict[pla].stat1[inc]
@@ -285,7 +332,7 @@ def build_player(pdict, loc, pla, eve_str, decay):
         depth += 1
 
         if(revert):
-            depth -= 7
+            depth -= 9
     
     # do outlier analysis if more than 3 events
     if(len(outlier2) > 3):
@@ -358,6 +405,7 @@ def fill_pdict(nc=False, event=None):
     # read in all stats
     events = text.split("\n===\n")
     for e_num, eve_stats in enumerate(events):
+        local_fasts = {}
         lines = eve_stats.split("\n")
         # for nc events, only read in the event with the relevant header
         if(nc):
@@ -366,6 +414,11 @@ def fill_pdict(nc=False, event=None):
             lines = lines[1:]
             # set e_num back to 0, only filling one entry for each stat
             e_num = 0
+        else:
+            if(e_num in fasts):
+                for num in fasts[e_num]:
+                    for pla in fasts[e_num][num]:
+                        local_fasts[pla] = num
 
         total_stat2 = 0
         stat2s = []
@@ -390,6 +443,15 @@ def fill_pdict(nc=False, event=None):
             stat2s.append(float(words[2]))
             plas.append(name)
 
+            if(name in local_fasts):
+                pdict[name].stat1[e_num] += local_fasts[name] * 0.3
+                pdict[name].stat2[e_num] += local_fasts[name] * 0.33
+                pdict[name].tstat1[e_num] += local_fasts[name] * 12
+                pdict[name].tstat2[e_num] += local_fasts[name] * 1.33
+            
+            pdict[name].stat4[e_num] = (pdict[name].stat1[e_num]+0.3) / (pdict[name].tstat1[e_num]+1.2)
+            pdict[name].stat5[e_num] = (pdict[name].stat2[e_num]) / max(pdict[name].tstat2[e_num], 0.01)
+
             # logic for determining outlier "stat6" teams, checks results in stat2 for all 4 players
             if(j % 4 == 3):
                 if(sorted(stat2s)[2] < 4):
@@ -405,6 +467,7 @@ def fill_pdict(nc=False, event=None):
             # if player in event, normalize stat2 to 40
             if(pdict[pla].stat2[e_num] != -1):
                 pdict[pla].stat2[e_num] /= total_stat2/40
+                pdict[pla].tstat2[e_num] /= total_stat2/40
     
     if(nc):
         return pdict
@@ -427,12 +490,12 @@ def fill_pdict(nc=False, event=None):
 
 # iterates though events, finding average "strength" metric going into each event
 # effectively an event comp measure 
-def compute_eve_str(pdict, decay=default_decay):
+def compute_eve_str(pdict, loc=-1, decay=default_decay):
     eve_str = [1] * 100
     new_eve_str = []
     for i in range(len(pdict["P053"].stat1)):
         new_eve_str.append(0)
-        # only compute strength for events 9 and higher
+        # only compute strength for events 3 and higher
         if(i >= 3):
             roster = all_rosters[i-3]
             # sum place average going into the event for all players
@@ -444,7 +507,7 @@ def compute_eve_str(pdict, decay=default_decay):
             new_eve_str[-1] = 1
     
     # find average over all events for normalization
-    aver = np.mean(new_eve_str[3:])
+    aver = np.mean(new_eve_str[3:loc])
 
     # normalize and scale all strengths
     for i in range(3, len(new_eve_str)):
@@ -566,6 +629,8 @@ def generate_pr(pdict, eve_str, decay=default_decay, d=default_d):
     average = 0
     # compute stats for every player to identify their individual skill level
     for pla in pdict:
+        if(pla == "P068"):
+            check = 0
         z = compute_eve_pla(pdict, len(all_rosters)+2, pla, eve_str, decay, True)
         matrix_pr.append([z.stat1, z.stat12, z.stat2, z.stat22, z.tstat1, z.tstat12, z.tstat2, z.tstat22, 
                     z.stat3, z.stat32, z.stat4, z.stat42, z.stat5, z.stat52, 1]) 
@@ -589,6 +654,7 @@ def generate_pr(pdict, eve_str, decay=default_decay, d=default_d):
     # get the current list of players and their frequency playing
     f = open(os.path.join(os.path.split(os.path.dirname(__file__))[0], "current_list.txt"))
     text = f.read()
+    f.close()
     lines = text.split("\n")
     pfreq_dict = {}
     for line in lines:
@@ -634,7 +700,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_18")
+    val = cla.eve_pr("EVE_48")
 
     # if current event, return pr
     if(cla.e_dict["CUR"] == eve_num):
