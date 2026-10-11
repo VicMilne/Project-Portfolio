@@ -10,10 +10,10 @@ default_d = [1,3,4]
 
 point_average = 800
 
-e_num = 20
+e_num = 22
 
 # numbered events where this contest appeared
-event_select = [0,1,3,4,5,6,7,8,11,13,18,21,26,29,34,35,37,38,40,43]
+event_select = [0,1,3,4,5,6,7,8,11,13,18,21,26,29,34,35,37,38,40,43,45,46]
 
 # team by team results for all events
 results = [1040,1420,1452,1144,704,760,1192,1128,1180,1104,
@@ -35,7 +35,9 @@ results = [1040,1420,1452,1144,704,760,1192,1128,1180,1104,
         500,458,720,583,269,401,446,750,623,1124,
         562,959,545,393,1185,1074,645,581,590,1110,
         720,945,1103,897,770,689,524,428,561,1194,
-        753,590,1293,842,795,527,734,854,605,515]
+        753,590,1293,842,795,527,734,854,605,515,
+        1327,927,887,755,735,1137,820,650,562,532,
+        835,550,1350,1076,1674,705,629,1004,932,1112]
 
 # baseline predictions to compare against
 pr_preds = [1000,1000,999,1000,999,1000,999,1000,999,999,
@@ -50,6 +52,8 @@ pr_preds = [1000,1000,999,1000,999,1000,999,1000,999,999,
             419,1153,522,577,944,829,1017,1000,880,1060,
             1306,732,1157,1064,770,1558,1471,204,561,1121,
             1000,1000,999,1000,999,1000,999,1000,999,999,
+            1000,1000,999,1000,999,1000,999,1000,999,999,
+            532,503,866,965,1285,640,531,670,738,962
             ]
 
 player_subs = {"P135": "P035", "P004": "P062", "P047": "P057", "P157": "P097", "P099": "P097", "P097": "P097",
@@ -72,7 +76,9 @@ player_subs = {"P135": "P035", "P004": "P062", "P047": "P057", "P157": "P097", "
 "P210": "P063", "P213": "P030", "P220": "P032", "P221": "P064", "P219": "P028", "P202": "P141", 
 "P222": "P012", "P215": "P097", "P216": "P096", "P217": "P096", "P218": "P097", "P223": "P011",
 "P224": "P060", "P225": "P077", "P105": "P096", "P226": "P051", "P124": "P011", "P227": "P012",
-"P231": "P010", "P142": "P059", "P214": "P011", "P104": "P022", "P076": "P026"
+"P231": "P010", "P142": "P059", "P214": "P011", "P104": "P022", "P076": "P026", "P255": "P062", 
+"P260": "P038", "P256": "P028", "P257": "P063", "P258": "P030", "P248": "P226", "P189": "P203", 
+"P259": "P226", "P208": "P015", "P293": "P032"
 }
 
 new_players = {"P117", "P107", "P105", "P135", "P136", "P146", "P071", "P198", "P199", 
@@ -88,7 +94,7 @@ class C3_class:
         self.e_dict = {"EVE_1": 0, "EVE_2": 1, "EVE_4": 2, "EVE_5": 3, "EVE_6": 4, "EVE_7": 5,
                        "EVE_8": 6, "EVE_9": 7, "EVE_12": 8, "EVE_14": 9, "EVE_23": 11, "EVE_28": 12, 
                        "EVE_31": 13, "EVE_36": 14, "EVE_37": 15, "EVE_39": 16, "EVE_40": 17, "EVE_42": 18, 
-                       "EVE_45": 19, "CUR": 20}
+                       "EVE_45": 19, "EVE_47": 20, "EVE_48": 21, "CUR": 22}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], roster=roster)
@@ -108,12 +114,11 @@ class C3_class:
     def eve_pr(self, event):
         if(event == "EVE_32"):
             return nceve1
-        if(event == "EVE_46"):
+        if(event == "EVE_50"):
             return nceve2
         
-        ind = min(max(13, self.e_dict[event]+2), self.e_dict["CUR"])
-        weights = train(self.pdict, e_num=ind, d=[1,3,4])
-        eve_pr = eve_pr_calc(self.pdict, self.e_dict[event], weights, d=[1,3,4])
+        weights = train(self.pdict, e_num=12, d=[1,3])
+        eve_pr = eve_pr_calc(self.pdict, self.e_dict[event], weights, d=[1,3])
         return eve_pr
 
 #############################################################################################
@@ -123,6 +128,7 @@ mypath = os.path.dirname(__file__)
 txtfile = os.path.join(mypath[:-2], "All_Teamsets.txt")
 f = open(txtfile, 'r')
 lines = f.read().split("\n")
+f.close()
 teams = [x.split("|") for x in lines]
 all_rosters = [[x.split(", ") for x in y] for y in teams]
 
@@ -152,10 +158,11 @@ class Player:
         self.stat3 = []
         self.stat4 = []
         self.stat5 = []
+        self.count = [0]
 
 def eve_pr_calc(pdict, eve, weights, d=default_d):
     # use either the current event, or for earlier events use event 6
-    loc = max(eve, 6) - 5
+    loc = min(max(eve, 4) - 5, len(pdict["P053"].share)-3)
     plist = []
  
     scores = results[eve*10:(eve+1)*10]
@@ -166,12 +173,14 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
         ind_scores = []
         for pla in team:
             if(pla in non_players):
-                vec = get_pla_stats(pdict, "P097", loc)
+                vec = get_pla_stats(pdict, "P097", loc+2)
             else:
-                vec = get_pla_stats(pdict, pla, loc)
+                vec = get_pla_stats(pdict, pla, loc+2, True)
             
-            if(e_num <= 5 and 5 not in d):
-                d.append(5)
+            if(pdict[pla].share[max(0, loc-1)] == 100):
+                vec[0] -= 0.02
+            elif(pdict[pla].count[loc+3] == 2):
+                vec[0] = (vec[0] - 0.25) * 0.8 + 0.25
     
             # select variables
             vec = np.delete(vec, d)
@@ -193,10 +202,10 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
             j += 1
         i += 1
 
-    # normalize all scores to sum to 10000
+    # normalize all scores to sum to 10215
     tot = sum([x[1] for x in plist])
     for i in range(len(plist)):
-        plist[i][1] = round(plist[i][1] * 10000 / tot)
+        plist[i][1] = round(plist[i][1] * 11000 / tot)
 
     plist = (sorted(plist,key=lambda x: (x[1])))
     plist.reverse()
@@ -245,6 +254,7 @@ def fill_pdict():
         txtfile = os.path.join(mypath, file_list[i] + ".txt")
         f = open(txtfile, "r")
         text = f.read()
+        f.close()
         lines = text.split("\n")
         for line in lines:
             vals = line.split(" ")
@@ -288,6 +298,8 @@ def fill_pdict():
         
         # need at least 5 events to get reasonable results
         if(i < 5):
+            for pla in pindex:
+                pdict[pla].count[0] += int(any([pla in team for team in all_rosters[i]]))
             continue
         
         # select just the assigned portion of full_matrix
@@ -310,10 +322,13 @@ def fill_pdict():
             # if player's first appearance, set previous values to 100 (treated as null)
             if(len(pdict[pla].share) == 0):
                 pdict[pla].share.extend([100] * (i - 5))
+                pdict[pla].count.extend([0] * (i - 5))
             if(pla in non_players):
                 pdict[pla].share.append(-0.1)
             else:
                 pdict[pla].share.append(ans[pindex[pla]])
+            num = pdict[pla].count[-1] + int(any([pla in team for team in all_rosters[i]]))
+            pdict[pla].count.append(num)
 
     # initialize substitution variable with nulls if not found
     length = len(pdict["P053"].share)
@@ -324,20 +339,25 @@ def fill_pdict():
     
     return pdict
 
-def get_pla_stats(pdict, pla, loc):
+def get_pla_stats(pdict, pla, loc, eve_pr=False):
     if(pla not in pdict):
         pla = player_subs[pla]
     z = pdict[pla]
+
+    x = 1
+    if(eve_pr):
+        x = 0.5
+
     s1 = z.share[loc] if z.share[loc] != 100 else pdict[player_subs[pla]].share[loc] - 0.05
-    s2 = z.stat2[loc] if z.stat2[loc] != 100 else pdict[player_subs[pla]].stat2[loc]
-    s3 = z.stat3[loc] if z.stat3[loc] != 100 else pdict[player_subs[pla]].stat3[loc]
-    s4 = z.stat4[loc] if z.stat4[loc] != 100 else pdict[player_subs[pla]].stat4[loc]
-    s5 = z.stat1[loc] if z.stat1[loc] != 100 else pdict[player_subs[pla]].stat1[loc]
+    s2 = z.stat2[loc] if z.stat2[loc] != 100 else pdict[player_subs[pla]].stat2[loc] * x
+    s3 = z.stat3[loc] if z.stat3[loc] != 100 else pdict[player_subs[pla]].stat3[loc] * x
+    s4 = z.stat4[loc] if z.stat4[loc] != 100 else pdict[player_subs[pla]].stat4[loc] * x
+    s5 = z.stat1[loc] if z.stat1[loc] != 100 else pdict[player_subs[pla]].stat1[loc] * x
     # use default 0 value if early event or player substitution also not initialized
     if(z.stat5[loc] == 100 and (loc <= 4 or pla not in player_subs or pdict[player_subs[pla]].stat5[loc] == 100)):
         s6 = 0
     elif(z.stat5[loc] == 100):
-        s6 = pdict[player_subs[pla]].stat5[loc]
+        s6 = pdict[player_subs[pla]].stat5[loc] * x
     else:
         s6 = z.stat5[loc]
     
@@ -447,6 +467,7 @@ def generate_pr(pdict, d=default_d):
     # read player frequencies from current players file
     f = open(os.path.join(os.path.split(os.path.dirname(__file__))[0], "current_list.txt"))
     text = f.read()
+    f.close()
     lines = text.split("\n")
     pfreq_dict = {}
     for line in lines:
@@ -485,11 +506,11 @@ if __name__ == "__main__":
         if(key != "CUR"):
             val = cla.eve_pr(key)
             for value in val:
-                perfList.append([value[1], value[0] + key[-2:]])
+                perfList.append([value[1], value[0] + key[3:]])
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_1")
+    val = cla.eve_pr("EVE_9")
 
     # if current event, return pr
     if(cla.e_dict["CUR"] == e_num):
