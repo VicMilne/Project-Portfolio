@@ -10,23 +10,23 @@ import os.path
 full = ["EVE_1", "EVE_2", "EVE_3", "EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_10", "EVE_11", "EVE_12", "EVE_13",
         "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_19", "EVE_20", "EVE_21", "EVE_22", "EVE_23", "EVE_24", "EVE_25", "EVE_26",
         "EVE_27", "EVE_28", "EVE_29", "EVE_30", "EVE_31", "EVE_32", "EVE_33", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_38", 
-        "EVE_39", "EVE_40", "EVE_41", "EVE_42", "EVE_43", "EVE_44", "EVE_45"]
+        "EVE_39", "EVE_40", "EVE_41", "EVE_42", "EVE_43", "EVE_44", "EVE_45", "EVE_46", "EVE_47", "EVE_48"]
 m4_list = ["EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_10", "EVE_12", "EVE_13", "EVE_15", "EVE_16", "EVE_18",
            "EVE_19", "EVE_21", "EVE_22", "EVE_24", "EVE_25", "EVE_26", "EVE_27", "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_36",
            "EVE_39", "EVE_41", "EVE_43", "EVE_44"]
 m3_list = ["EVE_1", "EVE_2", "EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_12", "EVE_14", "EVE_20", "EVE_23",
-           "EVE_28", "EVE_31", "EVE_36", "EVE_37", "EVE_39", "EVE_40", "EVE_42", "EVE_45"]
-m6_list = ["EVE_30", "EVE_32", "EVE_35", "EVE_38", "EVE_39", "EVE_41", "EVE_43", "EVE_45"]
+           "EVE_28", "EVE_31", "EVE_36", "EVE_37", "EVE_39", "EVE_40", "EVE_42", "EVE_45", "EVE_47", "EVE_48"]
+m6_list = ["EVE_30", "EVE_32", "EVE_35", "EVE_38", "EVE_39", "EVE_41", "EVE_43", "EVE_45", "EVE_47"]
 m5_list = ["EVE_11", "EVE_13", "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_21", "EVE_22", "EVE_23", "EVE_25", "EVE_26", "EVE_27",
            "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_38", "EVE_40", "EVE_41", "EVE_43", "EVE_44",
            "EVE_45"]
 
 eve_list_m1 = ["EVE_1", "EVE_3", "EVE_4", "EVE_5", "EVE_6", "EVE_9", "EVE_11", "EVE_13", "EVE_14", "EVE_15", "EVE_18",
                "EVE_19", "EVE_21", "EVE_24", "EVE_25", "EVE_27", "EVE_29", "EVE_31", "EVE_33", "EVE_34", "EVE_37",
-               "EVE_39", "EVE_41", "EVE_42", "EVE_43", "EVE_44"]
+               "EVE_39", "EVE_41", "EVE_42", "EVE_43", "EVE_44", "EVE_47", "EVE_48"]
 
 eve_list_m2 = ["EVE_1", "EVE_3", "EVE_6", "EVE_8", "EVE_10", "EVE_11", "EVE_14", "EVE_15", "EVE_16", "EVE_18", "EVE_19", 
-               "EVE_21", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_39", "EVE_42", "EVE_43"]
+               "EVE_21", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_39", "EVE_42", "EVE_43", "EVE_47"]
 
 eve_list_m8 = ["EVE_3", "EVE_4", "EVE_5", "EVE_6", "EVE_7", "EVE_8", "EVE_9", "EVE_10", "EVE_11", "EVE_14", "EVE_18", 
                "EVE_19", "EVE_20", "EVE_21", "EVE_22", "EVE_24", "EVE_25", "EVE_28", "EVE_29", "EVE_30", "EVE_35", "EVE_37", "EVE_40",
@@ -39,7 +39,7 @@ eve_list_m7 = ["EVE_1", "EVE_3", "EVE_4", "EVE_7", "EVE_9", "EVE_10", "EVE_11", 
 eve_list_m9 = ["EVE_1", "EVE_3", "EVE_4", "EVE_5", "EVE_8", "EVE_9", "EVE_10", "EVE_13", "EVE_14", "EVE_16", "EVE_18", 
                "EVE_19", "EVE_21", "EVE_24", "EVE_26", "EVE_27", "EVE_30", "EVE_34", "EVE_35", "EVE_36", "EVE_37", "EVE_42", "EVE_44",
                "EVE_45"]
-eve_list_mA = ["EVE_20", "EVE_23", "EVE_26", "EVE_28", "EVE_29", "EVE_30", "EVE_31", "EVE_35", "EVE_40", "EVE_42", "EVE_44"]
+eve_list_mA = ["EVE_20", "EVE_23", "EVE_26", "EVE_28", "EVE_29", "EVE_30", "EVE_31", "EVE_35", "EVE_40", "EVE_42", "EVE_44", "EVE_47"]
 
 # compute time decayed average going into each event in contest_list
 def compute_local(pdict, contest_list):
@@ -124,8 +124,6 @@ def export_contest(contest, eve_list, cols):
             if(contest == "C8" and contest_num < 4 and vals[1] == "1"):
                 pdict[pla][-1] /= 2
                 stored_list[-1] /= 2
-            elif(contest == "C8" and pla == "P098" and contest_num == 20):
-                pdict[pla][-1] = pdict["P011"][-1]
         
         # if contest is C1, do not normalize as the results are already normalized in a specific way
         if(contest != "C1"):
