@@ -5,11 +5,11 @@ decay = 0.85
 default_d = [4,6,8,10,11]
 
 use_subs = False
- 
-eve_num = 12
+
+eve_num = 13
 
 # numbered events where this contest appeared
-event_select = [0, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 24, 26, 29, 35, 37, 41]
+event_select = [0, 2, 3, 6, 8, 9, 10, 12, 14, 17, 20, 24, 26, 29, 35, 37, 41, 45]
 
 thres = 0.1
 
@@ -20,14 +20,15 @@ results = [975,1050,868,1083,746,1448,685,249,1391,1401,1595,840,974,1188,974,13
     1225,385,811,1156,1196,682,922,910,1111,1303,575,1033,980,941,1140,984,1400,1316,944,380,
     645,1374,1014,587,633,1277,727,974,1117,1073,859,848,682,1030,890,1773,1230,950,598,1100,
     968,564,1258,718,1379,1434,1021,970,1104,624,1125,1027,1130,1078,196,1327,1094,960,1150,767,
-    836,296,465,1426,1373,1366,1184,1198,1238,557]
+    836,296,465,1426,1373,1366,1184,1198,1238,557,1091,857,1628,835,1075,619,967,901,908,615]
 
 pr_preds = [980,980,980,980,980,980,980,980,980,980,980,980,980,980,980,980,980,980,980,980,
     1006,1520,1118,660,956,621,615,926,1534,816,1404,1333,1117,1182,820,600,1044,389,939,970,
     778,954,1323,898,1167,875,874,571,1492,773,1271,985,1075,1003,1074,913,1376,464,709,793,
     544,808,1282,953,1063,1218,941,570,992,1328,868,1174,1189,717,770,1419,893,717,980,959,
     1179,921,895,830,1000,1435,768,889,785,1378,1171,658,1274,799,1553,722,1118,800,843,807,
-    885,1031,930,844,377,1455,860,1203,1234,927,980,980,980,980,980,980,980,980,980,980]
+    885,1031,930,844,377,1455,860,1203,1234,927,980,980,980,980,980,980,980,980,980,980,
+    980,980,980,980,980,980,980,980,980,980]
 
 player_subs = {"P078": "P019", "P031": "P022", "P124": "P011", "P125": "P025", "P047": "P033", 
 "P012": "P058", "P057": "P051", "P008": "P019", "P084": "P035", "P144": "P054", "P017": "P019", 
@@ -39,7 +40,7 @@ player_subs = {"P078": "P019", "P031": "P022", "P124": "P011", "P125": "P025", "
 "P020": "P022", "P099": "P127", "P097": "P017", "P034": "P031", "P050": "P059", "P052": "P006", 
 "P137": "P011", "P039": "P059", "P065": "P042", "P015": "P009", "P073": "P134", "P059": "P043", 
 "P060": "P067", "P040": "P049", "P027": "P016", "P134": "P032", "P086": "P033", "P120": "P017", 
-"P121": "P009", "P075": "P026", "P071": "P096", "P148": "P067", "P141": "P016", "P143": "P038", 
+"P121": "P009", "P075": "P026", "P071": "P017", "P148": "P067", "P141": "P016", "P143": "P038", 
 "P145": "P065", "P150": "P004", "P154": "P026", "P153": "P099", "P152": "P017", "P149": "P036", 
 "P146": "P056", "P147": "P012", "P155": "P017", "P151": "P017", "P041": "P051", "P019": "P035", 
 "P006": "P035", "P010": "P017", "P068": "P001", "P077": "P097", "P203": "P008", "P202": "P015",
@@ -47,41 +48,44 @@ player_subs = {"P078": "P019", "P031": "P022", "P124": "P011", "P125": "P025", "
 "P216": "P026", "P217": "P056", "P218": "P097", "P215": "P097", "P220": "P144", "P221": "P005", 
 "P219": "P049", "P222": "P062", "P098": "P002", "P214": "P049", "P224": "P025", "P225": "P136",
 "P226": "P016", "P231": "P038", "P142": "P049", "P139": "P051", "P140": "P056", 
-"P227": "P025", "P025": "P060", "P118": "P056"}
+"P227": "P025", "P025": "P060", "P118": "P056", "P255": "P028", "P260": "P051", 
+"P256": "P049", "P257": "P057", "P258": "P056", "P248": "P025", "P189": "P141", 
+"P259": "P038", "P223": "P054", "P208": "P071"}
 
 class C7_class:
     def __init__(self):
         self.pdict = fill_pdict()
         self.e_dict = {"EVE_1": -5, "EVE_3": -4, "EVE_4": -3, "EVE_7": -2, "EVE_9": -1, "EVE_10": 0,
                        "EVE_11": 1, "EVE_13": 2, "EVE_15": 3, "EVE_19": 4, "EVE_22": 5, "EVE_26": 6, 
-                       "EVE_28": 7, "EVE_31": 8, "EVE_37": 9, "EVE_39": 10, "EVE_43": 11, "CUR": 12}
+                       "EVE_28": 7, "EVE_31": 8, "EVE_37": 9, "EVE_39": 10, "EVE_43": 11, "EVE_47": 12,
+                       "CUR": 13}
+        self.eve_str = compute_eve_str(self.pdict)
+        self.pr_eve_str = compute_eve_str(self.pdict, 10)
         self.nc_eves = {"EVE_2": 4, "EVE_12": 4, "EVE_17": 6, "EVE_23": 8}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
-        results = predict(self.pdict, self.e_dict[event], roster=roster)
+        results = predict(self.pdict, self.eve_str, self.e_dict[event], roster=roster)
         return results
     # returns player ranking results
     def pr_results(self):
-        pr = generate_pr(self.pdict)
+        pr = generate_pr(self.pdict, self.eve_str)
         return pr
     # returns predicted result of a new event, occuring at current time
     def cur_sim(self, roster):
-        results = predict(self.pdict, self.e_dict["CUR"], roster=roster)
+        results = predict(self.pdict, self.eve_str, self.e_dict["CUR"], roster=roster)
         results_indiv = []
         for val in results:
             for i in range(4): results_indiv.append(round(val/4))
         return results_indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
+        weights = train(self.pdict, self.pr_eve_str, 8, d=[6,7,8,9,10], eve_pr=True)
         if(event in self.nc_eves):
-            weights = train(self.pdict, eve_num=self.nc_eves[event], d=[6,7,8,9,10,11])
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
-            return eve_pr_calc(dict_nc, -5, weights, d=[6,7,8,9,10,11])
+            return eve_pr_calc(dict_nc, -5, weights, d=[6,7,8,9,10])
         
-        ind = min(max(6, self.e_dict[event]+2), self.e_dict["CUR"])
-        weights = train(self.pdict, eve_num=ind, d=[6,7,8,9,10,11])
-        return eve_pr_calc(self.pdict, self.e_dict[event], weights, d = [6,7,8,9,10,11])
+        return eve_pr_calc(self.pdict, self.e_dict[event], weights, d = [6,7,8,9,10])
 
 #############################################################################################
 # instantiate all_rosters by reading from file
@@ -89,6 +93,7 @@ mypath = os.path.dirname(__file__)
 txtfile = os.path.join(mypath[:-2], "All_Teamsets.txt")
 f = open(txtfile, 'r')
 lines = f.read().split("\n")
+f.close()
 teams = [x.split("|") for x in lines]
 all_rosters = [[x.split(", ") for x in y] for y in teams]
 
@@ -146,15 +151,10 @@ class eventPlayer:
         self.stat32 = 0
         self.stat5 = 0
 
-# factors are 11/54, 12/54, 13/54, 14/54, 15/54, normalized version of 9/54, 11/54, 13/54, 15/54, 17/54
 def eve_pr_calc(pdict, eve, ans, d=default_d):
     loc = eve + 5
     matrix = []
     plist = []
-
-    # store additional attack and defense times for reference
-    stat2_stand = []
-    stat1_stand = []
 
     # create stats matrix of every player in the particular event
     for pla in pdict:
@@ -163,38 +163,16 @@ def eve_pr_calc(pdict, eve, ans, d=default_d):
             continue
         nh = z.num_stat1[loc]
 
-        # temporarily store stat results for debug purposes
-        stat2_stand.append([pla, (z.stat3[loc] + z.stat2[loc]*2)/3])
-        if(nh == 0):
-            stat1_stand.append([pla, -1])
-        else:
-            stat1_stand.append([pla, 1/z.stat13[loc]])
-
-        stat3 = pow(z.stat3[loc], 3/4)
-        # lightly reduce importance of stat2 relative to other stats for pr purposes
-        if(nh == 0):
-            stat2 = pow(z.stat2[loc], 3/4)
-        else:
-            stat2 = pow(z.stat2[loc], 3/4) * (20-nh)/20 + pow(1/z.stat13[loc], 3/4) * (nh)/20
+        stat3 = z.stat3[loc]
+        stat2 = z.stat2[loc]
+        stat1 = z.stat13[loc]
 
         # various weights for 0, 1, 2, 3, or 4 attacks
-        if(nh == 0):
-            x1, x2, x3, x4 = 1/3, 0, 11/54, 1
-        elif(nh == 1):
-            x1, x2, x3, x4 = 8/27, 1/9, 12/54, 8/11
-        elif(nh == 2):
-            x1, x2, x3, x4 = 7/27, 2/9, 13/54, 7/13
-        elif(nh == 3):
-            x1, x2, x3, x4 = 6/27, 3/9, 14/54, 6/15
-        else:
-            x1, x2, x3, x4 = 5/27, 4/9, 15/54, 5/17
-        # initialize combined stats using implied "average" result (=1) for other half of equation
-        comb_ind = stat3 * x4 + (1/z.stat13[loc]) * (1-x4)
-        comb_tot = stat2 * x4 + (1/z.stat13[loc]) * (1-x4)
+        x1, x2 = 1/3 - nh/27, nh*2.5/9
 
-        matrix.append([stat3 * x1, pow(stat3, 2) * x1, stat2 * x1, pow(stat2, 2) * x1, z.stat5[loc] * x1,
-                                     (1/z.stat13[loc]) * x2, pow((1/z.stat13[loc]), 2) * x2, comb_ind*x3, pow(comb_ind, 2)*x3,
-                                      comb_tot*x3, pow(comb_tot, 2)*x3, nh, 0.25, 0.6])
+        matrix.append([stat3 * x1, stat3*abs(stat3) * x1, stat2 * x1, stat2*abs(stat2) * x1, z.stat5[loc] * x1,
+                                     stat1 * x2, stat1*abs(stat1) * x2, 0, 0,
+                                      0, 0, nh, 0.20, 0.075])
 
         plist.append([pla])
     
@@ -212,34 +190,21 @@ def eve_pr_calc(pdict, eve, ans, d=default_d):
                 vals[i] = vals[i]*m + b
 
     # normalize and round, then pair scores with players
-    f = 10000 / sum(vals)
+    f = 9750 / sum(vals)
     vals *= f
     for i in range(len(plist)):
         plist[i].append(float(round(vals[i])))
 
 
     plist = (sorted(plist,key=lambda x: (x[1]), reverse=True))
-    stat2_stand = sorted(stat2_stand, key=lambda x: (x[1]), reverse=True)
-    stat1_stand = sorted(stat1_stand, key=lambda x: (x[1]), reverse=True)
+
+    check_list = []
+    for pla, score in plist:
+        check_list.append([pla, score, round(pdict[pla].stat13[loc], 3)])
+        check_list[-1].append(round((pdict[pla].stat3[loc] + pdict[pla].stat2[loc]*2)/3, 3))
+        check_list[-1].append(pdict[pla].num_stat1[loc])
 
     return plist
-
-# compute average times for 3 stats in event "index", weighted by frequency each player attacks vs defenses
-def calculate_average(pdict, index):
-    aver1, aver2, aver3 = 0, 0, 0
-    tot1, tot2, tot3 = 0, 0, 0
-    for pla in pdict:
-        if(pdict[pla].stat3[index] != -1):
-            aver1 += pdict[pla].stat3_unadj[index] * pdict[pla].stat4[index]
-            tot1 +=  pdict[pla].stat4[index]
-        if(pdict[pla].stat13[index] != -1):
-            aver2 += pdict[pla].stat1_unadj[index] * pdict[pla].num_stat1[index]
-            tot2 += pdict[pla].num_stat1[index]
-        if(pdict[pla].stat2[index] != -1):
-            aver3 += pdict[pla].stat2_unadj[index] * pdict[pla].stat4[index]
-            tot3 +=  pdict[pla].stat4[index]
-
-    return [aver1/tot1, aver2/tot2, aver3/tot3]
 
 def attacker_check(pdict, name, aver, enum, decay=decay):
     # if 1st event (no baseline performance) return default strength of 1 (average)
@@ -286,7 +251,7 @@ def defenders_check(pdict, names, aver, enum, decay=decay):
     # iterate through all players on team
     for i in range(len(names)):
         # if player lacks past data
-        if(max(pdict[names[i]].stat3[:enum]) == -1):
+        if(max(pdict[names[i]].stat2_unadj[:enum]) == -1):
             # for first two events just use average performance
             if(len(aver) < 2):
                 total += 1
@@ -318,7 +283,7 @@ def defenders_check(pdict, names, aver, enum, decay=decay):
 
 # computes time decayed averages for all stats up to time loc
 # performs outlier analysis
-def build_player(pdict, loc, pla, decay):
+def build_player(pdict, loc, eve_str, pla, decay):
     inc = loc
     depth = 0
     div = [0,0,0]
@@ -327,35 +292,35 @@ def build_player(pdict, loc, pla, decay):
     event_player = eventPlayer()
 
     for var in ["stat1", "stat12", "stat3", "stat32", "stat2", "stat22"]:
-        setattr(event_player, var, 0.4)
+        setattr(event_player, var, -0.2)
     div[0] = 0.5
     div[1] = 0.5
     
     while(inc >= 0):
 
         ### attack stats
-        value = 1 / pdict[pla].stat13[inc]
-        if value != -1:
+        if(pdict[pla].stat1_unadj[inc] != -1):
+            value = pdict[pla].stat13[inc] + eve_str[inc] - eve_str[loc+1]
             event_player.stat1 += value * pow(decay, depth)
-            event_player.stat12 += pow(value,2) * pow(decay, depth)
+            event_player.stat12 += value * abs(value) * pow(decay, depth)
             div[0] += pow(decay,depth)
             if(depth < 5):
                 outlier1[0].append(value * pow(decay, depth))
                 outlier2[0].append(pow(decay, depth))
 
         ### defense stats
-        value = pdict[pla].stat2[inc]
-        if value != -1:
+        if(pdict[pla].stat2_unadj[inc] != -1):
+            value = pdict[pla].stat2[inc] + eve_str[inc] - eve_str[loc+1]
             event_player.stat2 += value * pow(decay, depth)
-            event_player.stat22 += pow(value,2) * pow(decay, depth)
+            event_player.stat22 += value * abs(value) * pow(decay, depth)
             div[1] += pow(decay,depth)
             if(depth < 5):
                 outlier1[1].append(value * pow(decay, depth))
                 outlier2[1].append(pow(decay, depth))
         
-            value = pdict[pla].stat3[inc]
+            value = pdict[pla].stat3[inc] + eve_str[inc] - eve_str[loc+1]
             event_player.stat3 += value * pow(decay, depth)
-            event_player.stat32 += pow(value,2) * pow(decay, depth)
+            event_player.stat32 += value * abs(value) * pow(decay, depth)
             if(depth < 5):
                 outlier1[2].append(value * pow(decay, depth))
 
@@ -363,7 +328,7 @@ def build_player(pdict, loc, pla, decay):
             event_player.num_stat1 += value * pow(decay, depth)
             div[2] += pow(decay,depth)
         
-            value = pdict[pla].stat5[inc]
+            value = pdict[pla].stat5[inc] + eve_str[inc] - eve_str[loc+1]
             event_player.stat5 += value * pow(decay, depth)
             if(depth < 5):
                 outlier1[3].append(value * pow(decay, depth))
@@ -381,7 +346,7 @@ def build_player(pdict, loc, pla, decay):
             # reduce outlier's effect by 50%, for squared values need to compute first
             if(abs((full_values[k] - mean)/std) > 10):
                 event_player.stat1 -= outlier1[0][k] * 0.5
-                event_player.stat12 -= pow(outlier1[0][k], 2) * 0.5 / outlier2[k]
+                event_player.stat12 -= outlier1[0][k] * abs(outlier1[0][k]) * 0.5 / outlier2[k]
                 div[0] -= outlier2[k] * 0.5
         
         # then address defending outlier stats
@@ -399,7 +364,7 @@ def build_player(pdict, loc, pla, decay):
                         if(i % 2 == 1):
                             setattr(event_player, var, vars(event_player)[var] - outlier1[(i-1)//2][k] * 0.5)
                         else:
-                            setattr(event_player, var, vars(event_player)[var] - pow(outlier1[(i-1)//2][k], 2) * 0.5 / outlier2[k])
+                            setattr(event_player, var, vars(event_player)[var] - outlier1[(i-1)//2][k] * abs(outlier1[(i-1)//2][k]) * 0.5 / outlier2[k])
                 div[1] -= outlier2[k] * 0.5
 
     # normalize attack and defend times seperately
@@ -417,22 +382,22 @@ def build_player(pdict, loc, pla, decay):
     return event_player
 
 
-def compute_eve_pla(pdict, loc, pla, decay, ispr):
+def compute_eve_pla(pdict, loc, pla, eve_str, decay, ispr):
     # if player not initialized or (haven't played many recent events and doing predictions)
     if(pla not in pdict or (pdict[pla].num_last7[loc] < 2 and not ispr)):
         # determine player substitution values
         if(use_subs or loc+1 == len(pdict[pla].stat2)):
-            pla_b = build_player(pdict, loc, player_subs[pla], decay)
+            pla_b = build_player(pdict, loc, eve_str, player_subs[pla], decay)
         else:
             # if not using subs, seed with data from the current event
-            pla_b = build_player(pdict, loc+1, pla, decay)
+            pla_b = build_player(pdict, loc+1, eve_str, pla, decay)
 
         # if player is new, set just the player substitution and return
         if(pla not in pdict or pdict[pla].num_last7[loc] < 1):
             return pla_b
     
     # initialize the player values
-    pla_a = build_player(pdict, loc, pla, decay)
+    pla_a = build_player(pdict, loc, eve_str, pla, decay)
     # if player has played recently or doing pr evals
     if(pdict[pla].num_last7[loc] >= 2 or ispr):
         return pla_a
@@ -443,6 +408,7 @@ def compute_eve_pla(pdict, loc, pla, decay, ispr):
     return pla_a
 
 def load_match(pdict, enum, baseline, attacker, defenders_list, decay=decay):
+    dtots, dinds, attack = [], [], []
     # get attacker strength
     astrength = attacker_check(pdict, attacker, baseline, enum, decay=decay)
 
@@ -460,9 +426,11 @@ def load_match(pdict, enum, baseline, attacker, defenders_list, decay=decay):
             pdict[pla].place[enum] += place
             pdict[pla].stat2[enum] += time * astrength
             pdict[pla].stat2_unadj[enum] += time
+            dtots.append(time)
             # compare with previous elim time to find stat3
             pdict[pla].stat3[enum] += (time-prev_elim) * astrength
             pdict[pla].stat3_unadj[enum] += (time-prev_elim)
+            dinds.append(time-prev_elim)
             prev_elim = time
             # if last player elim, update all shared times with overall time
             if(place == 3):
@@ -475,10 +443,11 @@ def load_match(pdict, enum, baseline, attacker, defenders_list, decay=decay):
         getattr(pdict[attacker], var_name)[enum] += time * defend_score
         if(place == 3):
             pdict[attacker].stat1_unadj[enum] += time
+            attack.append(time)
 
     # if all 3 defenders eliminated, no more work to be done
     if(place == 3):
-        return
+        return dtots, dinds, attack
 
     ### deal with successful defenses and corresponding attacker times
 
@@ -490,17 +459,20 @@ def load_match(pdict, enum, baseline, attacker, defenders_list, decay=decay):
         stat2, stat3, stat5 = 70, 70 - defenders_list[1][1], max(70, defenders_list[1][1]*3/2)
         pdict[attacker].stat13[enum] += max(70, defenders_list[1][1]*3/2) * dstrength
         pdict[attacker].stat1_unadj[enum] += stat5
+        attack.append(stat5)
     elif(place == 1):
         stat2, stat3, stat5 = 80, 70 - defenders_list[0][1], max(110, defenders_list[0][1]*2.5)
         pdict[attacker].stat12[enum] += max(70, defenders_list[0][1]*2) * dstrength
         pdict[attacker].stat13[enum] += max(110, defenders_list[0][1]*3) * dstrength
         pdict[attacker].stat1_unadj[enum] += max(110, defenders_list[0][1]*3)
+        attack.append(max(110, defenders_list[0][1]*3))
     else:
         stat2, stat3, stat5 = 90, 50, 180
         pdict[attacker].stat11[enum] += 70 * dstrength
         pdict[attacker].stat12[enum] += 140 * dstrength
         pdict[attacker].stat13[enum] += 210 * dstrength
         pdict[attacker].stat1_unadj[enum] += 210
+        attack.append(210)
     
     # update all successful defenders with values set in last step
     if(astrength > thres):
@@ -512,10 +484,12 @@ def load_match(pdict, enum, baseline, attacker, defenders_list, decay=decay):
                 pdict[pla].place[enum] += 3
                 pdict[pla].stat2[enum] += stat2 * astrength
                 pdict[pla].stat2_unadj[enum] += stat2
+                dtots.append(stat2)
                 pdict[pla].stat3[enum] += stat3 * astrength
                 pdict[pla].stat3_unadj[enum] += stat3
+                dinds.append(stat3)
                 pdict[pla].stat4[enum] += 1  
-    return
+    return dtots, dinds, attack
 
 def fill_pdict(nc=False, eve=None):
     pdict = {}
@@ -561,6 +535,8 @@ def fill_pdict(nc=False, eve=None):
     events = text.split("\n===\n")
     average = []
     for enum, event in enumerate(events):
+        dtots, dinds, att = [], [], []
+
         # if nc, select only requested event and remove the header
         if(nc):
             if(event[:event.index("\n")] != eve):
@@ -618,32 +594,35 @@ def fill_pdict(nc=False, eve=None):
                         hdefenders_list.append([summary[i], 60])
                 
                 # now process results for both halves of the match
-                load_match(pdict, enum, average, home_stat1, hdefenders_list)
-                load_match(pdict, enum, average, away_stat1, adefenders_list)
+                l1, l2, l3 = load_match(pdict, enum, average, home_stat1, hdefenders_list)
+                dtots.extend(l1)
+                dinds.extend(l2)
+                att.extend(l3)
+                l1, l2, l3 = load_match(pdict, enum, average, away_stat1, adefenders_list)
+                dtots.extend(l1)
+                dinds.extend(l2)
+                att.extend(l3)
 
+        avers = [sum(dtots)/len(dtots), sum(dinds)/len(dinds), sum(att)/len(att)]
+        stds = [np.std(dtots), np.std(dinds), np.std(att)]
         for pla in pdict:
             if(pdict[pla].num_stat1[enum] != -1):
                 # if player never attacked, set values to placeholder, otherwise divide by num_attacks
-                attack = pdict[pla].num_stat1[enum] == 0
+                notattack = pdict[pla].num_stat1[enum] == 0
                 for var in ["stat11", "stat12", "stat13", "stat1_unadj"]:
-                    getattr(pdict[pla], var)[enum] = -1 if attack else getattr(pdict[pla], var)[enum] / pdict[pla].num_stat1[enum]
+                    getattr(pdict[pla], var)[enum] = -1 if notattack else getattr(pdict[pla], var)[enum] / pdict[pla].num_stat1[enum]
+                if(not notattack):
+                    pdict[pla].stat13[enum] = (avers[2] - pdict[pla].stat13[enum]) / stds[2]
 
                 # divide defend totals by number of defend rounds
                 for var in ["stat2", "stat3", "place", "stat5", "stat3_unadj", "stat2_unadj"]:
                     getattr(pdict[pla], var)[enum] /= pdict[pla].stat4[enum]
+                pdict[pla].stat2[enum] = (pdict[pla].stat2[enum] - avers[0]) / stds[0]
+                pdict[pla].stat3[enum] = (pdict[pla].stat3[enum] - avers[1]) / stds[1]
+                pdict[pla].stat5[enum] /= avers[0]
         
         # compute average times for the event, used to normalize by event
-        average.append(calculate_average(pdict,enum))
-    
-    # normalize all performances by the corresponding event averages
-    for pla in pdict:
-        for i in range(len(pdict[pla].place)):
-            if(pdict[pla].place[i] != -1):
-                pdict[pla].stat3[i] /= average[i][0]
-                pdict[pla].stat2[i] /= average[i][2]
-                pdict[pla].stat5[i] /= average[i][2]
-                if(pdict[pla].stat13[i] != -1):
-                    pdict[pla].stat13[i] /= average[i][1]
+        average.append([avers[1], avers[2], avers[0]])
     
     if(nc):
         return pdict
@@ -655,7 +634,7 @@ def fill_pdict(nc=False, eve=None):
             eve_tot = 0
             # check last 7 events, or until start of event history
             for k in range(max(0, i-7), i):
-                    if(pdict[pla].stat2[k] != -1):
+                    if(pdict[pla].stat2_unadj[k] != -1):
                         eve_tot += 1
             # for early events, manually set to 2 if played in 1
             if(i < 3 and eve_tot == 1):
@@ -668,38 +647,52 @@ def fill_pdict(nc=False, eve=None):
     for i in range(len(pdict[pla].place)):
         for pla in pdict:
             if(pdict[pla].place[i] != -1):
-                string += pla + "\t" + str(round(pdict[pla].stat2[i], 3)) + "\t" + str(round(1/pdict[pla].stat13[i], 3)) + "\n"
+                string += pla + "\t" + str(round(pdict[pla].stat2[i], 3)) + "\t" + str(round(pdict[pla].stat13[i], 3)) + "\n"
         string = string + "===\n"
     string = string[:-5]
 
-    mypath = mypath[:-2] + "Exterior Stats"
-    txtfile = os.path.join(mypath, "C7stats.txt")
-    f = open(txtfile, 'w')
-    f.write(string)
-    f.close()
+    # mypath = mypath[:-2] + "Exterior Stats"
+    # txtfile = os.path.join(mypath, "C7stats.txt")
+    # f = open(txtfile, 'w')
+    # f.write(string)
+    # f.close()
     
     # return result
     return pdict
 
-def compute_team(pdict, loc, team, decay=0.85):
+def compute_team(pdict, loc, team, eve_str, decay=0.85, eve_pr=False):
     # 3 best attackers are selected, need to store their attack scores
     stat1s = []
     z = []
     for pla in team:
-        z.append(compute_eve_pla(pdict, loc, pla, decay, False))
+        z.append(compute_eve_pla(pdict, loc, pla, eve_str, decay, False))
         stat1s.append([z[-1].stat1 + z[-1].num_stat1/4, pla])
     
     # sort attack scores to determine order
     stat1s = sorted(stat1s, reverse=True)
+    if(not eve_pr):
+        stat1s[3][0] = 0
+        stat1s[2][0] = 1
+        stat1s[1][0] = 4
+        stat1s[0][0] = 4
+    else:
+        for i in range(4):
+            stat1s[i][0] = pdict[stat1s[i][1]].num_stat1[loc+1]
+
     row = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     for i in range(4):
-        # if worst attack score, contributes exclusively to defend scores
-        if(team[i] == stat1s[3][1]):
+        pla = team[i]
+        for j in range(4):
+            if(stat1s[j][1] == pla):
+                nh = stat1s[j][0]
+        nnh = (9-nh)
+        # if no attacks, contributes exclusively to defend scores
+        if(nh == 0):
             row = np.add(row, [z[i].stat3 * 1/3, z[i].stat32 * 1/3, z[i].stat2 * 1/3, z[i].stat22 * 1/3, z[i].stat5 * 1/3,
                             0, 0, 0, 0, 0, 0, z[i].num_stat1, 0.25])
         else:
             # hard limit of how bad an attack can be evaluated at
-            z[i].stat1 = max(0.2, z[i].stat1)
+            z[i].stat1 = max(-1.5, z[i].stat1)
             # to compute combined scores, take weighted average of 3 other participants' defending
             sum_run_ind = 0
             sum_run_tot = 0
@@ -709,23 +702,45 @@ def compute_team(pdict, loc, team, decay=0.85):
                     sum_run_tot += z[j].stat2 / 3
             
             # compute combined scores (selected attacker * unselected defenders)
-            ind_ratio = z[i].stat1 * sum_run_ind
-            tot_ratio = z[i].stat1 * sum_run_tot
+            ind_ratio = np.tanh(z[i].stat1+sum_run_ind) + 1
+            tot_ratio = np.tanh(z[i].stat1+sum_run_tot) + 1
 
-            # if 2nd worst attack score, slightly impacts attacking scores, greatly impacts defending
-            if(team[i] == stat1s[2][1]):
-                row = np.add(row, [z[i].stat3 * 8/27, z[i].stat32 * 8/27, z[i].stat2 * 8/27, z[i].stat22 * 8/27, z[i].stat5 * 8/27,
-                                z[i].stat1 * 1/9, z[i].stat12 * 1/9, ind_ratio * 1/9, pow(ind_ratio, 2) * 1/9, 
-                                tot_ratio * 1/9, pow(tot_ratio, 2) * 1/9, z[i].num_stat1, 0.25])
-            # top 2, strongly impacts attack, less defense
-            else:
-                row = np.add(row, [z[i].stat3 * 5/27, z[i].stat32 * 5/27, z[i].stat2 * 5/27, z[i].stat22 * 5/27, z[i].stat5 * 5/27,
-                                z[i].stat1 * 4/9, z[i].stat12 * 4/9, ind_ratio * 4/9, pow(ind_ratio, 2) * 4/9, 
-                                tot_ratio * 4/9, pow(tot_ratio, 2) * 4/9, z[i].num_stat1, 0.25])
+            row = np.add(row, [z[i].stat3 * nnh/27, z[i].stat32 * nnh/27, z[i].stat2 * nnh/27, z[i].stat22 * nnh/27, z[i].stat5 * nnh/27,
+                                z[i].stat1 * nh/9, z[i].stat12 * nh/9, ind_ratio * nh/9, pow(ind_ratio, 2) * nh/9, 
+                                tot_ratio * nh/9, pow(tot_ratio, 2) * nh/9, z[i].num_stat1, 0.25])
     
     return row
 
-def train(pdict, eve_num=None, decay=0.85, d=default_d):
+# iterates though events, finding average "place" metric going into each event
+# effectively an event strength measure 
+def compute_eve_str(pdict, loc=-1, decay=0.9):
+    eve_str = [0] * 100
+    new_eve_str = []
+    for i in range(len(pdict["P053"].stat3)):
+        new_eve_str.append(0)
+        # only compute strength for events 9 and higher
+        if(i >= 3):
+            roster = all_rosters[i]
+            # sum place average going into the event for all players
+            for team in roster:
+                for pla in team:
+                    eve_pla = compute_eve_pla(pdict, i-1, pla, eve_str, decay, False)
+                    new_eve_str[-1] += eve_pla.stat2*(9-eve_pla.num_stat1)/9 + eve_pla.stat1*eve_pla.num_stat1/9
+    
+    # find average over all events for normalization
+    aver = np.mean(new_eve_str[9:loc])
+
+    # normalize and scale all strengths
+    for i in range(3, len(new_eve_str)):
+        new_eve_str[i] -= aver
+        new_eve_str[i] /= 40
+
+    # set final (current) event to 0, neutral strength
+    new_eve_str.append(0)
+
+    return new_eve_str
+
+def train(pdict, eve_str, eve_num=None, decay=0.85, d=default_d, eve_pr=False):
     roster_train = all_rosters[2:]
 
     if(eve_num is None):
@@ -738,7 +753,7 @@ def train(pdict, eve_num=None, decay=0.85, d=default_d):
     for event in roster_train[:eve_num+3]:
         aver = 0
         for team in event:
-            matrix.append(list(compute_team(pdict, loc, team, decay)))
+            matrix.append(list(compute_team(pdict, loc, team, eve_str, decay, eve_pr)))
             aver += matrix[-1][0] + matrix[-1][4]
 
         aver = aver / 40
@@ -762,8 +777,8 @@ def train(pdict, eve_num=None, decay=0.85, d=default_d):
     
     return weights
 
-def predict(pdict, eve_num, decay=0.85, d=default_d, roster=None):
-    weights = train(pdict, eve_num, decay, d)
+def predict(pdict, eve_str, eve_num, decay=0.85, d=default_d, roster=None):
+    weights = train(pdict, eve_str, eve_num, decay, d)
 
     # if roster is supplied, override event #eve_num with roster
     if(roster is not None):
@@ -776,7 +791,7 @@ def predict(pdict, eve_num, decay=0.85, d=default_d, roster=None):
 
     # compute every team's stats going into the event
     for team in predict_roster:
-        input_matrix.append(list(compute_team(pdict, eve_num+4, team, decay)))
+        input_matrix.append(list(compute_team(pdict, eve_num+4, team, eve_str, decay)))
         average += input_matrix[-1][0] + input_matrix[-1][4]
 
     # append average time of the whole event as another trainable variable
@@ -795,21 +810,20 @@ def predict(pdict, eve_num, decay=0.85, d=default_d, roster=None):
         
     return result
 
-def generate_pr(pdict, decay=0.85, d=default_d):
-    weights = train(pdict, decay=decay, d=d)
+def generate_pr(pdict, eve_str, decay=0.85, d=default_d):
+    weights = train(pdict, eve_str, decay=decay, d=d)
 
     matrix_pr = []
     pr = []
     pdict_eve = {}
 
     # compute stats for every player to identify their individual skill level
-    average = 0
     for pla in pdict:
-        z = compute_eve_pla(pdict, len(all_rosters)-1, pla, decay=decay, ispr=True)
+        z = compute_eve_pla(pdict, len(all_rosters)-1, pla, eve_str, decay=decay, ispr=True)
         pdict_eve[pla] = z
         # apply below replacement level attack stats to non-attackers
         if(z.num_stat1 < 1):
-            z.stat1 = 0.3*(1 - z.num_stat1) + z.stat1*(z.num_stat1)
+            z.stat1 = -1 * (1 - z.num_stat1) + z.stat1*(z.num_stat1)
             z.num_stat1 = 1
         # smoothen attack freq
         z.num_stat1 = z.num_stat1 - (1/5)*(z.num_stat1 - 2.5)
@@ -818,22 +832,18 @@ def generate_pr(pdict, decay=0.85, d=default_d):
         # (attack stats * avg defend (1), and defense stats * avg attack (1))
         x = z.num_stat1
         y = 9 - x*0.75
-        ind_ratio = (z.stat1 * x + z.stat3 * y / 3) / (x + y / 3)
-        tot_ratio = (z.stat1 * x + z.stat2 * y / 3) / (x + y / 3)
+        ind_ratio = np.tanh(z.stat1 + z.stat3) + 1
+        tot_ratio = np.tanh(z.stat1 + z.stat2) + 1
+        # ind_ratio = ((np.tanh(z.stat1)+1) * x + (np.tanh(z.stat3)+1) * y/3) / (x+y/3)
+        # tot_ratio = ((np.tanh(z.stat1)+1) * x + (np.tanh(z.stat2)+1) * y/3) / (x+y/3)
 
         # create row for the player
         matrix_pr.append([z.stat3 * y / 27, z.stat32 * y / 27, z.stat2 * y / 27, z.stat22 * y / 27, z.stat5 * y / 27,
-                          z.stat1 * x / 9, z.stat12 * x / 9, ind_ratio * (10+x*2) / 54,
-                            pow(ind_ratio, 2) * (10+x*2) / 54, tot_ratio * (10+x*2) / 54,
-                            pow(tot_ratio, 2) * (10+x*2) / 54, z.num_stat1, 0.25])
+                          z.stat1 * x / 9, z.stat12 * x / 9, ind_ratio * (9+x*2) / 54,
+                            pow(ind_ratio, 2) * (9+x*2) / 54, tot_ratio * (9+x*2) / 54,
+                            pow(tot_ratio, 2) * (9+x*2) / 54, z.num_stat1, 0.25, 0.2])
 
-        average += z.stat3 + z.stat1
         pr.append([pla])
-    
-    # append averages (divide by number of players, then by 4 (share of team's))
-    average = average / len(pdict)
-    for row in matrix_pr:
-        row.append(average/4)
 
     # compute scores and append to player names
     matrix_pr = np.delete(matrix_pr, d, axis=1)
@@ -847,6 +857,7 @@ def generate_pr(pdict, decay=0.85, d=default_d):
     # filter out players who aren't "current"
     f = open(os.path.join(os.path.split(os.path.dirname(__file__))[0], "current_list.txt"))
     text = f.read()
+    f.close()
     lines = text.split("\n")
     pfreq_dict = {}
     for line in lines:
@@ -891,8 +902,6 @@ def generate_pr(pdict, decay=0.85, d=default_d):
     return pr
 
 if __name__ == "__main__":    
-    pdict = fill_pdict()
-
     cla = C7_class()
     pdict = cla.pdict
 
@@ -901,16 +910,16 @@ if __name__ == "__main__":
         if(key != "CUR"):
             val = cla.eve_pr(key)
             for value in val:
-                perfList.append([value[1], value[0] + key[-2:]])
+                perfList.append([value[1], value[0] + key[3:]])
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
 
-    val = cla.eve_pr("EVE_43")
+    val = cla.eve_pr("EVE_15")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):
-        pr = generate_pr(pdict, decay=decay, d=default_d)
+        pr = generate_pr(pdict, cla.eve_str, decay=decay, d=default_d)
         string = ""
         for player in pr:
             string = string + (player[0] + "\t" + str(player[1]) + "\n")
@@ -918,7 +927,7 @@ if __name__ == "__main__":
         check = 0
     # otherwise, compute scores from selected event
     else:
-        scores = predict(pdict, eve_num, decay, default_d)
+        scores = predict(pdict, cla.eve_str, eve_num, decay, default_d)
 
         # for simulated events, check against true results for mse accuracy
         results_test = results[30+eve_num*10:40+eve_num*10]

@@ -5764,7 +5764,7 @@ vpode ef nioaeti - eokvf P044 (1st), P000 (2nd)
 <0:24> P221 weopfm vons qowdm P044
 <0:30> P062 weopfm vons qowdm P000
 nioaeti niiqow owf n jdofz jep ewoj jfrc
-<0:33> P220 weopfm vons qowdm P044 
+<0:33> P220 weopfm vons qowdm P044
 ero pfel ker merpw meokwds: None
 
 njogb ef mgieroq - eokvf P001 (1st), P036 (2nd)
@@ -6043,7 +6043,7 @@ njogb ef qimpfcn - eokvf P001 (4th), P054 (4th)
 <0:18> P010 weopfm vons qowdm P054
 <0:25> P064 weopfm vons qowdm P001
 njogb bonset owf n jdofz jep ewoj jfrc
-<0:34> P063 weopfm vons qowdm P054 
+<0:34> P063 weopfm vons qowdm P054
 ero pfel ker merpw meokwds: None
 
 nvfjoae ef nioaeti - eokvf P032 (4th), P000 (4th)
@@ -6515,3 +6515,433 @@ bosrj ef eopjtp - eokvf P050 (4th), P025 (3rd)
 <0:20> P005 weopfm vons qowdm P050
 <0:36> P009 weopfm vons qowdm P050
 ero pfel ker merpw meokwds: P035, P141
+===
+vpode ef nvfjoae - eokvf P068 (1st), P255 (1st)
+<0:09> P225 weopfm vons qowdm P068
+<0:21> P025 weopfm vons qowdm P255
+<0:25> P260 weopfm vons qowdm P068
+<0:26> P153 weopfm vons qowdm P255
+<0:33> P145 weopfm vons qowdm P068
+vpode oegid nerojowa moeew krep ewoj jfrc
+<0:35> P051 weopfm vons qowdm P255
+ero pfel ker merpw meokwds: None
+
+njogb ef bsro - eokvf P210 (1st), P257 (1st)
+<0:13> P059 weopfm vons qowdm P210
+<0:28> P258 weopfm vons qowdm P210
+<0:32> P222 weopfm vons qowdm P257
+ero pfel ker merpw meokwds: P148, P202, P042
+
+qimpfcn ef bosrj - eokvf P032 (1st), P142 (1st)
+<0:13> P149 weopfm vons qowdm P032
+<0:18> P035 weopfm vons qowdm P142
+<0:20> P189 weopfm vons qowdm P032
+<0:22> P056 weopfm vons qowdm P142
+<0:34> P248 weopfm vons qowdm P032
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:53> P046 weopfm vons qowdm P142
+ero pfel ker merpw meokwds: None
+
+beinpa ef nioaeti - eokvf P256 (1st), P011 (1st)
+<0:10> P224 weopfm vons qowdm P011
+<0:23> P023 weopfm vons qowdm P256
+<0:28> P016 weopfm vons qowdm P256
+<0:46> P223 weopfm vons qowdm P256
+beinpa negowv nerojowa moeew krep ewoj jfrc
+<0:46> P073 weopfm vons qowdm P011
+<0:59> P226 weopfm vons qowdm P011
+ero pfel ker merpw meokwds: None
+
+mgieroq ef eopjtp - eokvf P001 (1st), P034 (1st)
+<0:09> P027 weopfm vons qowdm P034
+<0:09> P208 weopfm vons qowdm P001
+<0:16> P053 weopfm vons qowdm P001
+<0:22> P064 weopfm vons qowdm P034
+<0:26> P259 weopfm vons qowdm P001
+mgieroq woejofdv nerojowa moeew krep ewoj jfrc
+<0:33> P221 weopfm vons qowdm P034
+ero pfel ker merpw meokwds: None
+---
+vpode ef bsro - eokvf P068 (2nd), P059 (1st)
+<0:08> P257 weopfm vons qowdm P068
+<0:12> P051 weopfm vons qowdm P059
+<0:14> P042 weopfm vons qowdm P068
+<0:23> P258 weopfm vons qowdm P068
+vpode oegid nerojowa moeew krep ewoj jfrc
+<0:32> P025 weopfm vons qowdm P059
+<0:38> P153 weopfm vons qowdm P059
+ero pfel ker merpw meokwds: None
+
+njogb ef beinpa - eokvf P210 (2nd), P256 (2nd)
+<0:08> P202 weopfm vons qowdm P256
+<0:08> P224 weopfm vons qowdm P210
+<0:19> P222 weopfm vons qowdm P256
+<0:28> P073 weopfm vons qowdm P210
+<0:36> P148 weopfm vons qowdm P256
+beinpa negowv nerojowa moeew krep ewoj jfrc
+<0:52> P226 weopfm vons qowdm P210
+ero pfel ker merpw meokwds: None
+
+qimpfcn ef eopjtp - eokvf P046 (1st), P034 (2nd)
+<0:07> P259 weopfm vons qowdm P046
+<0:10> P208 weopfm vons qowdm P046
+<0:12> P053 weopfm vons qowdm P046
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:16> P056 weopfm vons qowdm P034
+<0:33> P032 weopfm vons qowdm P034
+<0:39> P035 weopfm vons qowdm P034
+ero pfel ker merpw meokwds: None
+
+nvfjoae ef bosrj - eokvf P145 (1st), P248 (1st)
+<0:12> P149 weopfm vons qowdm P145
+<0:19> P260 weopfm vons qowdm P248
+<0:19> P142 weopfm vons qowdm P145
+<0:27> P189 weopfm vons qowdm P145
+nvfjoae njoafe nerojowa moeew krep ewoj jfrc
+<0:30> P225 weopfm vons qowdm P248
+<0:42> P255 weopfm vons qowdm P248
+ero pfel ker merpw meokwds: None
+
+nioaeti ef mgieroq - eokvf P223 (1st), P001 (2nd)
+<0:08> P016 weopfm vons qowdm P001
+<0:08> P023 weopfm vons qowdm P001
+<0:12> P027 weopfm vons qowdm P223
+<0:18> P011 weopfm vons qowdm P001
+mgieroq woejofdv nerojowa moeew krep ewoj jfrc
+<0:23> P221 weopfm vons qowdm P223
+<0:34> P064 weopfm vons qowdm P223
+ero pfel ker merpw meokwds: None
+---
+vpode ef beinpa - eokvf P068 (3rd), P256 (3rd)
+<0:11> P073 weopfm vons qowdm P068
+<0:22> P226 weopfm vons qowdm P068
+<0:29> P153 weopfm vons qowdm P256
+<0:33> P224 weopfm vons qowdm P068
+vpode oegid nerojowa moeew krep ewoj jfrc
+<0:37> P025 weopfm vons qowdm P256
+<0:45> P051 weopfm vons qowdm P256
+ero pfel ker merpw meokwds: None
+
+njogb ef mgieroq - eokvf P148 (1st), P001 (3rd)
+<0:10> P221 weopfm vons qowdm P148
+<0:14> P222 weopfm vons qowdm P001
+<0:18> P027 weopfm vons qowdm P148
+<0:19> P202 weopfm vons qowdm P001
+<0:33> P064 weopfm vons qowdm P148
+njogb bonset nerojowa moeew krep ewoj jfrc
+<0:36> P210 weopfm vons qowdm P001
+ero pfel ker merpw meokwds: None
+
+qimpfcn ef nioaeti - eokvf P046 (2nd), P223 (2nd)
+<0:09> P035 weopfm vons qowdm P223
+<0:10> P011 weopfm vons qowdm P046
+<0:15> P016 weopfm vons qowdm P046
+<0:19> P056 weopfm vons qowdm P223
+<0:25> P023 weopfm vons qowdm P046
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:34> P032 weopfm vons qowdm P223
+ero pfel ker merpw meokwds: None
+
+nvfjoae ef bsro - eokvf P255 (2nd), P257 (2nd)
+<0:20> P042 weopfm vons qowdm P255
+<0:23> P225 weopfm vons qowdm P257
+<0:38> P258 weopfm vons qowdm P255
+<0:47> P145 weopfm vons qowdm P257
+<0:52> P059 weopfm vons qowdm P255
+nvfjoae njoafe nerojowa moeew krep ewoj jfrc
+<0:57> P260 weopfm vons qowdm P257
+ero pfel ker merpw meokwds: None
+
+bosrj ef eopjtp - eokvf P149 (1st), P259 (1st)
+<0:08> P189 weopfm vons qowdm P259
+<0:09> P208 weopfm vons qowdm P149
+<0:28> P053 weopfm vons qowdm P149
+<0:31> P142 weopfm vons qowdm P259
+ero pfel ker merpw meokwds: P248, P034
+---
+vpode ef mgieroq - eokvf P068 (4th), P001 (4th)
+<0:07> P153 weopfm vons qowdm P001
+<0:09> P064 weopfm vons qowdm P068
+<0:16> P025 weopfm vons qowdm P001
+<0:21> P221 weopfm vons qowdm P068
+<0:31> P051 weopfm vons qowdm P001
+mgieroq woejofdv nerojowa moeew krep ewoj jfrc
+<0:33> P027 weopfm vons qowdm P068
+ero pfel ker merpw meokwds: None
+
+njogb ef qimpfcn - eokvf P210 (3rd), P056 (1st)
+<0:17> P202 weopfm vons qowdm P056
+<0:22> P035 weopfm vons qowdm P210
+<0:29> P222 weopfm vons qowdm P056
+<0:34> P148 weopfm vons qowdm P056
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:40> P046 weopfm vons qowdm P210
+ero pfel ker merpw meokwds: P032
+
+nvfjoae ef eopjtp - eokvf P260 (1st), P053 (1st)
+<0:08> P259 weopfm vons qowdm P260
+<0:13> P255 weopfm vons qowdm P053
+<0:23> P208 weopfm vons qowdm P260
+<0:28> P225 weopfm vons qowdm P053
+<0:47> P145 weopfm vons qowdm P053
+eopjtp nojvser nerojowa moeew krep ewoj jfrc
+<0:47> P034 weopfm vons qowdm P260
+ero pfel ker merpw meokwds: None
+
+beinpa ef bsro - eokvf P226 (1st), P042 (1st)
+<0:13> P258 weopfm vons qowdm P226
+<0:14> P224 weopfm vons qowdm P042
+<0:21> P256 weopfm vons qowdm P042
+<0:27> P073 weopfm vons qowdm P042
+bsro kvfnoa nerojowa moeew krep ewoj jfrc
+<0:33> P059 weopfm vons qowdm P226
+ero pfel ker merpw meokwds: P257
+
+nioaeti ef bosrj - eokvf P011 (2nd), P149 (2nd)
+<0:05> P248 weopfm vons qowdm P011
+<0:08> P016 weopfm vons qowdm P149
+<0:12> P189 weopfm vons qowdm P011
+<0:25> P142 weopfm vons qowdm P011
+nioaeti niiqow nerojowa moeew krep ewoj jfrc
+<0:40> P223 weopfm vons qowdm P149
+<0:51> P023 weopfm vons qowdm P149
+ero pfel ker merpw meokwds: None
+---
+vpode ef qimpfcn - eokvf P025 (1st), P032 (2nd)
+<0:11> P068 weopfm vons qowdm P032
+<0:17> P046 weopfm vons qowdm P025
+<0:19> P153 weopfm vons qowdm P032
+<0:32> P035 weopfm vons qowdm P025
+<0:34> P051 weopfm vons qowdm P032
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:46> P056 weopfm vons qowdm P025
+ero pfel ker merpw meokwds: None
+
+njogb ef bosrj - eokvf P148 (2nd), P142 (2nd)
+<0:13> P222 weopfm vons qowdm P142
+<0:15> P202 weopfm vons qowdm P142
+<0:28> P210 weopfm vons qowdm P142
+bosrj vdpsier nerojowa moeew krep ewoj jfrc
+<0:41> P149 weopfm vons qowdm P148
+<0:48> P248 weopfm vons qowdm P148
+<0:54> P189 weopfm vons qowdm P148
+ero pfel ker merpw meokwds: None
+
+nvfjoae ef beinpa - eokvf P145 (2nd), P224 (1st)
+<0:11> P260 weopfm vons qowdm P224
+<0:26> P226 weopfm vons qowdm P145
+<0:33> P255 weopfm vons qowdm P224
+<0:40> P256 weopfm vons qowdm P145
+<0:47> P225 weopfm vons qowdm P224
+beinpa negowv nerojowa moeew krep ewoj jfrc
+<0:58> P073 weopfm vons qowdm P145
+ero pfel ker merpw meokwds: None
+
+nioaeti ef eopjtp - eokvf P223 (3rd), P053 (2nd)
+<0:08> P259 weopfm vons qowdm P223
+<0:14> P208 weopfm vons qowdm P223
+<0:20> P011 weopfm vons qowdm P053
+<0:28> P034 weopfm vons qowdm P223
+nioaeti niiqow nerojowa moeew krep ewoj jfrc
+<0:28> P016 weopfm vons qowdm P053
+<0:38> P023 weopfm vons qowdm P053
+ero pfel ker merpw meokwds: None
+
+bsro ef mgieroq - eokvf P042 (2nd), P064 (1st)
+<0:18> P258 weopfm vons qowdm P064
+<0:22> P221 weopfm vons qowdm P042
+<0:33> P027 weopfm vons qowdm P042
+<0:42> P257 weopfm vons qowdm P064
+<0:43> P001 weopfm vons qowdm P042
+bsro kvfnoa nerojowa moeew krep ewoj jfrc
+<0:52> P059 weopfm vons qowdm P064
+ero pfel ker merpw meokwds: None
+---
+vpode ef bosrj - eokvf P025 (2nd), P142 (3rd)
+<0:06> P153 weopfm vons qowdm P142
+<0:14> P051 weopfm vons qowdm P142
+<0:20> P189 weopfm vons qowdm P025
+<0:33> P068 weopfm vons qowdm P142
+bosrj vdpsier nerojowa moeew krep ewoj jfrc
+<0:37> P149 weopfm vons qowdm P025
+ero pfel ker merpw meokwds: P248
+
+njogb ef eopjtp - eokvf P210 (4th), P034 (3rd)
+<0:09> P148 weopfm vons qowdm P034
+<0:12> P202 weopfm vons qowdm P034
+<0:13> P208 weopfm vons qowdm P210
+<0:29> P259 weopfm vons qowdm P210
+<0:39> P053 weopfm vons qowdm P210
+njogb bonset nerojowa moeew krep ewoj jfrc
+<0:39> P222 weopfm vons qowdm P034
+ero pfel ker merpw meokwds: None
+
+qimpfcn ef bsro - eokvf P032 (3rd), P257 (3rd)
+<0:09> P042 weopfm vons qowdm P032
+<0:47> P056 weopfm vons qowdm P257
+<0:50> P059 weopfm vons qowdm P032
+<0:56> P258 weopfm vons qowdm P032
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+ero pfel ker merpw meokwds: P046, P035
+
+nvfjoae ef nioaeti - eokvf P255 (3rd), P011 (3rd)
+<0:07> P023 weopfm vons qowdm P255
+<0:11> P016 weopfm vons qowdm P255
+<0:12> P260 weopfm vons qowdm P011
+<0:26> P225 weopfm vons qowdm P011
+<0:26> P223 weopfm vons qowdm P255
+nvfjoae njoafe nerojowa moeew krep ewoj jfrc
+<0:38> P145 weopfm vons qowdm P011
+ero pfel ker merpw meokwds: None
+
+beinpa ef mgieroq - eokvf P224 (2nd), P221 (1st)
+<0:21> P226 weopfm vons qowdm P221
+<0:46> P027 weopfm vons qowdm P224
+<0:51> P073 weopfm vons qowdm P221
+ero pfel ker merpw meokwds: P256, P001, P064
+---
+vpode ef eopjtp - eokvf P025 (3rd), P034 (4th)
+<0:11> P051 weopfm vons qowdm P034
+<0:21> P208 weopfm vons qowdm P025
+<0:25> P153 weopfm vons qowdm P034
+<0:25> P259 weopfm vons qowdm P025
+<0:41> P053 weopfm vons qowdm P025
+vpode oegid nerojowa moeew krep ewoj jfrc
+<0:50> P068 weopfm vons qowdm P034
+ero pfel ker merpw meokwds: None
+
+njogb ef nioaeti - eokvf P148 (3rd), P016 (1st)
+<0:15> P223 weopfm vons qowdm P148
+<0:20> P202 weopfm vons qowdm P016
+<0:22> P023 weopfm vons qowdm P148
+<0:34> P210 weopfm vons qowdm P016
+<0:34> P011 weopfm vons qowdm P148
+njogb bonset nerojowa moeew krep ewoj jfrc
+<0:48> P222 weopfm vons qowdm P016
+ero pfel ker merpw meokwds: None
+
+qimpfcn ef beinpa - eokvf P032 (4th), P256 (4th)
+<0:09> P056 weopfm vons qowdm P256
+<0:09> P226 weopfm vons qowdm P032
+<0:13> P035 weopfm vons qowdm P256
+<0:18> P046 weopfm vons qowdm P256
+beinpa negowv nerojowa moeew krep ewoj jfrc
+<0:19> P224 weopfm vons qowdm P032
+<0:33> P073 weopfm vons qowdm P032
+ero pfel ker merpw meokwds: None
+
+nvfjoae ef mgieroq - eokvf P145 (3rd), P064 (2nd)
+<0:10> P001 weopfm vons qowdm P145
+<0:19> P027 weopfm vons qowdm P145
+<0:21> P225 weopfm vons qowdm P064
+<0:30> P260 weopfm vons qowdm P064
+<0:53> P221 weopfm vons qowdm P145
+nvfjoae njoafe nerojowa moeew krep ewoj jfrc
+<0:57> P255 weopfm vons qowdm P064
+ero pfel ker merpw meokwds: None
+
+bsro ef bosrj - eokvf P042 (3rd), P142 (4th)
+<0:06> P189 weopfm vons qowdm P042
+<0:12> P258 weopfm vons qowdm P142
+<0:18> P149 weopfm vons qowdm P042
+<0:19> P257 weopfm vons qowdm P142
+<0:25> P248 weopfm vons qowdm P042
+bsro kvfnoa nerojowa moeew krep ewoj jfrc
+<0:28> P059 weopfm vons qowdm P142
+ero pfel ker merpw meokwds: None
+---
+vpode ef nioaeti - eokvf P025 (4th), P223 (4th)
+<0:16> P153 weopfm vons qowdm P223
+<0:16> P011 weopfm vons qowdm P025
+<0:24> P051 weopfm vons qowdm P223
+<0:26> P016 weopfm vons qowdm P025
+<0:35> P023 weopfm vons qowdm P025
+vpode oegid nerojowa moeew krep ewoj jfrc
+<0:59> P068 weopfm vons qowdm P223
+ero pfel ker merpw meokwds: None
+
+njogb ef nvfjoae - eokvf P222 (1st), P255 (4th)
+<0:14> P148 weopfm vons qowdm P255
+<0:15> P145 weopfm vons qowdm P222
+<0:24> P260 weopfm vons qowdm P222
+<0:31> P202 weopfm vons qowdm P255
+<0:40> P225 weopfm vons qowdm P222
+njogb bonset nerojowa moeew krep ewoj jfrc
+<0:52> P210 weopfm vons qowdm P255
+ero pfel ker merpw meokwds: None
+
+qimpfcn ef mgieroq - eokvf P046 (3rd), P064 (3rd)
+<0:14> P221 weopfm vons qowdm P046
+<0:18> P001 weopfm vons qowdm P046
+<0:22> P056 weopfm vons qowdm P064
+<0:30> P027 weopfm vons qowdm P046
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:54> P032 weopfm vons qowdm P064
+ero pfel ker merpw meokwds: P035
+
+beinpa ef bosrj - eokvf P226 (2nd), P149 (3rd)
+<0:28> P224 weopfm vons qowdm P149
+<0:29> P142 weopfm vons qowdm P226
+<0:39> P073 weopfm vons qowdm P149
+<0:52> P256 weopfm vons qowdm P149
+bosrj vdpsier nerojowa moeew krep ewoj jfrc
+ero pfel ker merpw meokwds: P248, P189
+
+bsro ef eopjtp - eokvf P059 (2nd), P053 (3rd)
+<0:10> P208 weopfm vons qowdm P059
+<0:13> P258 weopfm vons qowdm P053
+<0:17> P034 weopfm vons qowdm P059
+<0:25> P042 weopfm vons qowdm P053
+<0:36> P257 weopfm vons qowdm P053
+eopjtp nojvser nerojowa moeew krep ewoj jfrc
+<0:39> P259 weopfm vons qowdm P059
+ero pfel ker merpw meokwds: None
+---
+vpode ef njogb - eokvf P051 (1st), P222 (2nd)
+<0:10> P148 weopfm vons qowdm P051
+<0:24> P025 weopfm vons qowdm P222
+<0:37> P068 weopfm vons qowdm P222
+<0:44> P210 weopfm vons qowdm P051
+<0:50> P202 weopfm vons qowdm P051
+vpode oegid nerojowa moeew krep ewoj jfrc
+<0:50> P153 weopfm vons qowdm P222
+ero pfel ker merpw meokwds: None
+
+qimpfcn ef nvfjoae - eokvf P046 (4th), P145 (4th)
+<0:08> P260 weopfm vons qowdm P046
+<0:09> P225 weopfm vons qowdm P046
+<0:15> P255 weopfm vons qowdm P046
+qimpfcn npria nerojowa moeew krep ewoj jfrc
+<0:20> P035 weopfm vons qowdm P145
+<0:30> P032 weopfm vons qowdm P145
+<0:44> P056 weopfm vons qowdm P145
+ero pfel ker merpw meokwds: None
+
+beinpa ef eopjtp - eokvf P224 (3rd), P259 (2nd)
+<0:14> P208 weopfm vons qowdm P224
+<0:17> P053 weopfm vons qowdm P224
+<0:31> P226 weopfm vons qowdm P259
+<0:40> P034 weopfm vons qowdm P224
+beinpa negowv nerojowa moeew krep ewoj jfrc
+<0:52> P073 weopfm vons qowdm P259
+ero pfel ker merpw meokwds: P256
+
+nioaeti ef bsro - eokvf P011 (4th), P059 (3rd)
+<0:07> P016 weopfm vons qowdm P059
+<0:13> P258 weopfm vons qowdm P011
+<0:16> P223 weopfm vons qowdm P059
+<0:19> P257 weopfm vons qowdm P011
+<0:28> P023 weopfm vons qowdm P059
+bsro kvfnoa nerojowa moeew krep ewoj jfrc
+<0:29> P042 weopfm vons qowdm P011
+ero pfel ker merpw meokwds: None
+
+mgieroq ef bosrj - eokvf P064 (4th), P149 (4th)
+<0:10> P001 weopfm vons qowdm P149
+<0:19> P221 weopfm vons qowdm P149
+<0:21> P248 weopfm vons qowdm P064
+<0:32> P189 weopfm vons qowdm P064
+<0:38> P142 weopfm vons qowdm P064
+mgieroq woejofdv nerojowa moeew krep ewoj jfrc
+<0:47> P027 weopfm vons qowdm P149
+ero pfel ker merpw meokwds: None
