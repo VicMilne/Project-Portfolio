@@ -95,6 +95,7 @@ class C8_class:
     def __init__(self):
         self.pdict = fill_pdict()
         self.eve_str = compute_eve_str(self.pdict)
+        self.pr_eve_str = compute_eve_str(self.pdict, 18)
         self.e_dict = {"EVE_3": -8, "EVE_4": -7,"EVE_5": -6, "EVE_6": -5, "EVE_7": -4, "EVE_8": -3,
                     "EVE_9": -2, "EVE_10": -1, "EVE_11": 0, "EVE_14": 1, "EVE_18": 2, "EVE_19": 3, 
                     "EVE_21": 5, "EVE_22": 6, "EVE_24": 7, "EVE_25": 8, "EVE_28": 9, "EVE_29": 10, 
@@ -118,14 +119,12 @@ class C8_class:
         return results_indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
+        weights = train(self.pdict, self.pr_eve_str, 11, d=[7, 8, 9, 13, 14])
         if(event in self.nc_eves):
             # need the uncounted data for the above events
             dict_nc = fill_pdict(True, event)
-            weights = train(self.pdict, self.eve_str, self.nc_eves[event], d=[7, 8, 9, 13, 14])
             return eve_pr_calc(dict_nc, -8, weights, d=[7, 8, 9, 13, 14])
-        
-        ind = min(max(5, self.e_dict[event]+3), self.e_dict["CUR"])
-        weights = train(self.pdict, self.eve_str, eve_num=ind, d=[7, 8, 9, 13, 14])
+
         return eve_pr_calc(self.pdict, self.e_dict[event], weights, d = [7, 8, 9, 13, 14])
 
 #############################################################################################
@@ -135,6 +134,7 @@ mypath = os.path.dirname(__file__)
 txtfile = os.path.join(mypath[:-2], "All_Teamsets.txt")
 f = open(txtfile, 'r')
 lines = f.read().split("\n")
+f.close()
 teams = [x.split("|") for x in lines]
 all_rosters = [[x.split(", ") for x in y] for y in teams]
 
@@ -186,7 +186,6 @@ class eventPlayer:
         self.s_stat5 = 0
         self.s_stat52 = 0
 
-
 def eve_pr_calc(pdict, eve, weights, d):
     loc = eve + 8
     matrix = []
@@ -196,37 +195,39 @@ def eve_pr_calc(pdict, eve, weights, d):
         if(pdict[pla].stat9s[loc] == -1):
             continue
         
-        # if not a one-off event, use previous event's r values
+        # if not a one-off event, use weighted average of r values from before and after
         if(len(pdict[pla].stat9s) > 1):
-            stat2 = 0
-            stat4 = 0
-            inc = loc-1
-            count = 0
-            total = 0
+            stat2 = pdict[pla].stat2[loc] * 0.4
+            stat4 = pdict[pla].stat4[loc] * 0.4
+            mult = 0.2
+            nextNum = loc+1
+            missingWeight = 0
+            while(nextNum < min(len(pdict[pla].time), loc+6)):
+                if(pdict[pla].time[nextNum] != -1):
+                    stat2 += pdict[pla].stat2[nextNum] * mult
+                    stat4 += pdict[pla].stat4[nextNum] * mult
+                    mult -= 0.1
+                    if(mult == 0):
+                        break
+                nextNum += 1
+            missingWeight += mult
 
-            # compute stat4 over last 6 events played
-            while(inc >= 0 and count < 6):
-                # skip outlier results
-                if(inc in skips and pla in skips[inc]):
-                    inc -= 1
-                    continue
-                # linear decay over 6 events
-                if(pdict[pla].stat4[inc] != -1):
-                    stat2 += pdict[pla].stat2[inc] * (6-count)
-                    stat4 += pdict[pla].stat4[inc] * (6-count)
-                    total += (6-count)
-                    count += 1
-                inc -= 1
+            mult = 0.2
+            prevNum = loc-1
+            while(prevNum > max(-1, loc-6)):
+                if(pdict[pla].time[prevNum] != -1):
+                    stat2 += pdict[pla].stat2[prevNum] * mult
+                    stat4 += pdict[pla].stat4[prevNum] * mult
+                    mult -= 0.1
+                    if(mult == 0):
+                        break
+                prevNum -= 1
+            missingWeight += mult
             
-            stat2 /= max(total, 1)
-            stat4 /= max(total, 1)
-            # if played less than 6 events, normalize results towards average score
-            if(count < 6):
-                stat2 = stat2*total/27 + 0.02*(27-total)/27
-                stat4 = stat4*total/27 + 0.02*(27-total)/27
+            stat2 += 0.11 * missingWeight
+            stat4 += 0.11 * missingWeight
 
-            # use stat4 from previous events and current event, 6:4 ratio
-            factor = (stat2 + stat4) * 0.6 + (pdict[pla].stat2[loc] + pdict[pla].stat4[loc]) * 0.4
+            factor = stat2 + stat4
         else:
             # if one off event, lower r for event
             factor = (pdict[pla].stat2[loc] + pdict[pla].stat4[loc]) * 0.6
@@ -238,7 +239,7 @@ def eve_pr_calc(pdict, eve, weights, d):
         if(z.stat3[loc] == 1):
             matrix.append([z.stat9s[loc]*r, pow(z.stat9s[loc], 2)*r, z.stat5[loc], pow(z.stat5[loc], 2), 
                         0, 0, z.time[loc], pow(z.time[loc], 2),
-                       z.stat6[loc], pow(z.stat6[loc], 2), z.stat9_rate[loc]*r, pow(z.stat9_rate[loc], 2)*r, 0, r, 1, 1])
+                       z.stat6[loc], pow(z.stat6[loc], 2), z.stat9_rate[loc]*r, pow(z.stat9_rate[loc], 2)*r, 1, r, 1, 1])
         else:
             matrix.append([z.stat9s[loc]*r, pow(z.stat9s[loc], 2)*r, z.stat5[loc], pow(z.stat5[loc], 2), 
                         z.vstat9s[loc]*r, pow(z.vstat9s[loc], 2)*r, z.time[loc], pow(z.time[loc], 2),
@@ -260,10 +261,10 @@ def eve_pr_calc(pdict, eve, weights, d):
             del plist[ind]
         vals = np.array(vals)
         tot = sum(vals)
-        vals *= 9000/tot
+        vals *= 9513/tot
     else:
         tot = sum(vals)
-        vals *= 10000/tot
+        vals *= 10570/tot
 
     for i in range(len(plist)):
         plist[i].append(float(round(vals[i])))
@@ -272,6 +273,54 @@ def eve_pr_calc(pdict, eve, weights, d):
     plist = (sorted(plist,key=lambda x: (x[1])))
     plist.reverse()
     return plist
+
+def reformate_stats(text):
+    eves = text.split("\n===\n")
+    for num in skips:
+        lines = eves[num].split("\n")
+        for i in range(len(lines)-1, -1, -1):
+            if(lines[i].split("\t")[0] in skips[num]):
+                del lines[i]
+        eves[num] = "\n".join(lines)
+    
+    eve_avgs = []
+    pla_avgs = {}
+    for eve in eves:
+        eve_avgs.append(0)
+        lines = eve.split("\n")
+        for line in lines:
+            eve_avgs[-1] += int(line.split("\t")[2])
+        eve_avgs[-1] /= len(lines)
+        for line in lines:
+            vals = line.split("\t")
+            if(vals[0] not in pla_avgs):
+                pla_avgs[vals[0]] = [0,0,0,0]
+            if(vals[1] == "0"):
+                pla_avgs[vals[0]][1] += 1
+                pla_avgs[vals[0]][0] += int(vals[2]) / eve_avgs[-1]
+            else:
+                pla_avgs[vals[0]][3] += 1
+                pla_avgs[vals[0]][2] += int(vals[2]) / eve_avgs[-1]
+    for pla in pla_avgs:
+        if(pla_avgs[pla][2] > 0 and pla_avgs[pla][1] > 1 and pla_avgs[pla][0]/pla_avgs[pla][1] > 0.9):
+            pla_avgs[pla].append(pla_avgs[pla][0]/pla_avgs[pla][1])
+        else:
+            pla_avgs[pla].append(0)
+    
+    for i, eve in enumerate(eves):
+        lines = eve.split("\n")
+        for j in range(len(lines)):
+            vals = lines[j].split("\t")
+            if(vals[1] == "1" and pla_avgs[vals[0]][4] > 0):
+                vals[2] = str(int(pla_avgs[vals[0]][4] * eve_avgs[i]))
+                vals[1] = "0"
+            lines[j] = "\t".join(vals)
+        eves[i] = "\n".join(lines)
+    
+    adj_txt = "\n===\n".join(eves)
+            
+    return adj_txt
+
 
 def build_player(pdict, loc, pla, eve_str, decay=default_decay):
     inc = loc
@@ -458,10 +507,11 @@ def fill_pdict(nc=False, event_name=None):
 
     if(not nc):
         # export stat sheet to exterior stats, used for other models
+        new_txt = reformate_stats(text)
         mypath = mypath[:-2] + "Exterior Stats"
         txtfile = os.path.join(mypath, "C8stats.txt")
         f = open(txtfile, 'w')
-        f.write(text)
+        f.write(new_txt)
         f.close()
 
     events = text.split("\n===\n")
@@ -564,10 +614,11 @@ def fill_pdict(nc=False, event_name=None):
                 pdict[pla].time[enum] /= average[2]
                 if(pdict[pla].stat3[enum] == 0):
                     pdict[pla].stat5[enum] /= average[3]
+                    pdict[pla].stat7[enum] /= (average[3] / average[2])
                 else:
                     pdict[pla].stat5[enum] /= average[4]
+                    pdict[pla].stat7[enum] /= (average[4] / average[2])
                 pdict[pla].stat9_rate[enum] /= (average[0] / average[2])
-                pdict[pla].stat7[enum] /= (average[3] / average[2])
     
     # if not counted, can return without backfill or stat6 computation
     if(nc):
@@ -671,7 +722,7 @@ def fill_pdict(nc=False, event_name=None):
 
     return pdict
 
-def compute_eve_str(pdict, decay=default_decay):
+def compute_eve_str(pdict, loc=-1, decay=default_decay):
     eve_str = [1] * 100
     new_eve_str = []
     for i in range(len(pdict["P053"].time)):
@@ -688,7 +739,7 @@ def compute_eve_str(pdict, decay=default_decay):
             new_eve_str[-1] = 1.0
     
     # find average over all events for normalization
-    aver = np.mean(new_eve_str[5:])
+    aver = np.mean(new_eve_str[5:loc])
 
     # normalize and scale all strengths
     for i in range(5, len(new_eve_str)):
@@ -860,6 +911,7 @@ def generate_pr(pdict, eve_str, decay=default_decay, d=default_d):
     # obtain the frequencies each player currently plays in the event
     f = open(os.path.join(os.path.split(os.path.dirname(__file__))[0], "current_list.txt"))
     text = f.read()
+    f.close()
     lines = text.split("\n")
     pfreq_dict = {}
     for line in lines:
@@ -899,11 +951,11 @@ if __name__ == "__main__":
         if(key != "CUR"):
             val = cla.eve_pr(key)
             for value in val:
-                perfList.append([value[1], value[0] + key[-2:]])
+                perfList.append([value[1], value[0] + key[3:]])
     perfList = sorted(perfList, reverse=True)
 
     # test eve_pr
-    val = cla.eve_pr("EVE_45")
+    val = cla.eve_pr("EVE_5")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == e_num):
