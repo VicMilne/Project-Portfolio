@@ -1,11 +1,11 @@
 import numpy as np
 import os.path
 
-default_decay = 0.85
-default_d = [1, 7, 9, 10, 12, 13, 14, 16]
-eve_num = 21
+default_decay = 0.98
+default_d = [3,6,7,9,10,12,14,17,20,23]
+eve_num = 22
 
-event_select = [13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42,43]
+event_select = [13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42,43,45]
 
 results = [750, 1405, 1265, 690, 420, 1365, 385, 2215, 1295, 550, 940, 510, 1930, 480, 2130, 805, 850, 1135, 1005, 415,
     455, 955, 1115, 810, 1050, 1060, 1225, 1570, 1105, 780, 940, 1060, 815, 1270, 1230, 1520, 700, 400, 920, 925,
@@ -18,7 +18,7 @@ results = [750, 1405, 1265, 690, 420, 1365, 385, 2215, 1295, 550, 940, 510, 1930
     545, 1025, 705, 760, 1665, 1275, 555, 1260, 1495, 545, 550, 930, 1175, 1405, 1185, 950, 1625, 1005, 775, 530,
     850, 950, 935, 1260, 1310, 1875, 500, 1175, 390, 970, 475, 1425, 1435, 1485, 830, 795, 975, 770, 1230, 430,
     1655, 360, 825, 930, 1420, 1030, 585, 1300, 1045, 795, 1815, 825, 945, 620, 1110, 525, 1075, 875, 750, 1165,
-    450, 1415, 920, 985, 500, 1345, 1270, 1125, 1140, 685]
+    450, 1415, 920, 985, 500, 1345, 1270, 1125, 1140, 685, 1040, 910, 1375, 1140, 380, 830, 705, 1355, 945, 965]
 
 pr_preds = [
     980, 675, 1156, 1317, 1338, 951, 1084, 1583, 200, 933, 931, 1265, 718, 1088, 976, 1658, 790, 301, 1799, 663,
@@ -31,7 +31,7 @@ pr_preds = [
     1222, 674, 1920, 889, 931, 1255, 1057, 842, 733, 503, 729, 815, 635, 1205, 1739, 1575, 975, 515, 1023, 813,
     874, 1203, 931, 1493, 1662, 1352, 549, 663, 654, 643, 1094, 1752, 862, 725, 1561, 826, 691, 536, 1218, 759,
     1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 583, 643, 1002, 636, 1371, 961, 498, 1540, 1379, 1412,
-    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040]
+    1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040, 1040]
 
 player_subs = {"P046": "P034", "P010": "P019", "P029": "P074", "P062": "P061",
 "P033": "P056", "P006": "P058", "P052": "P058", "P036": "P045", "P000": "P048", "P059": "P044",
@@ -58,7 +58,9 @@ player_subs = {"P046": "P034", "P010": "P019", "P029": "P074", "P062": "P061",
 "P219": "P054", "P230": "P056", "P228": "P012", "P229": "P136", "P130": "P063", "P021": "P062",
 "P231": "P032", "P177": "P038", "P014": "P006", "P061": "P044", "P056": "P015", "P233": "P044",
 "P079": "P026", "P186": "P015", "P072": "P060", "P208": "P073", "P232": "P202",
-"P012": "P060"}
+"P012": "P060", "P255": "P000", "P260": "P030", "P256": "P214", "P257": "P141", "P258": "P051", 
+"P248": "P035", "P189": "P208", "P259": "P005", "P222": "P023", "P221": "P019"}
+    
 
 class C6_class:
     def __init__(self):
@@ -67,8 +69,8 @@ class C6_class:
                        "EVE_21": 2, "EVE_22": 3, "EVE_23": 4, "EVE_25": 5, "EVE_26": 6, "EVE_27": 7, "EVE_29": 8,
                        "EVE_31": 9, "EVE_33": 10, "EVE_34": 11, "EVE_35": 12, "EVE_36": 13, "EVE_37": 14, 
                        "EVE_38": 15, "EVE_40": 16, "EVE_41": 17, "EVE_43": 18, "EVE_44": 19, "EVE_45": 20,
-                       "CUR": 21}
-        self.nc_eves = {"EVE_17": 6}
+                       "EVE_47":21, "CUR": 22}
+        self.nc_eves = {"EVE_17", "EVE_46", "EVE_51"}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results, _ = predict(self.pdict, self.e_dict[event], roster=roster)
@@ -82,16 +84,17 @@ class C6_class:
         _, results = predict(self.pdict, self.e_dict["CUR"], roster=roster)
         return results
     # computes and returns single event player scores
-    def eve_pr(self, event):
+    def eve_pr(self, event, d=[0,3,4,5,6,8,9,10,13,14,15,17,19,20,21,23]):
         if(event in self.nc_eves):
             # need the uncounted data for the above events
+            weights = train(self.pdict, 9, d=[0,3,4,5,6,8,9,10,12,13,14,15,17,19,20,21,23])
             dict_nc = fill_pdict(True, event)
-            weights = train(self.pdict, self.nc_eves[event], d=[1, 7, 9, 10, 12, 13, 14, 16])
-            return eve_pr_calc(dict_nc, -4, weights, d=[1, 7, 9, 10, 12, 13, 14, 16])
+            eval_pr = eve_pr_calc(dict_nc, -4, weights, d=[0,3,4,5,6,8,9,10,12,13,14,15,17,19,20,21,23])
+
+            return eval_pr
         
-        ind = min(max(7, self.e_dict[event]+2), self.e_dict["CUR"])
-        weights = train(self.pdict, d=[1, 7, 9, 10, 12, 13, 14, 16])
-        return eve_pr_calc(self.pdict, self.e_dict[event], weights, [1, 7, 9, 10, 12, 13, 14, 16])
+        weights = train(self.pdict, 8, d=d)
+        return eve_pr_calc(self.pdict, self.e_dict[event], weights, d)
 
 #############################################################################################
 
@@ -100,6 +103,7 @@ mypath = os.path.dirname(__file__)
 txtfile = os.path.join(mypath[:-2], "All_Teamsets.txt")
 f = open(txtfile, 'r')
 lines = f.read().split("\n")
+f.close()
 teams = [x.split("|") for x in lines]
 all_rosters = [[x.split(", ") for x in y] for y in teams]
 
@@ -114,6 +118,8 @@ class Player:
         self.stat4 = [-1] * num_eve
         self.stat6 = [-1] * num_eve
         self.tstat6 = [-1] * num_eve
+        self.statC = [-1] * num_eve
+        self.statB = [-1] * num_eve
         self.comp = [-1] * num_eve
         self.num_teams = [-1] * num_eve
         self.num_last7 = [-1] * num_eve
@@ -136,6 +142,10 @@ class fullPlayer(Player):
         self.stat62 = 0
         self.tstat6 = 0
         self.tstat62 = 0
+        self.statC = 0
+        self.statC2 = 0
+        self.statB = 0
+        self.statB2 = 0
         self.stat8 = 0
         self.stat82 = 0
         self.stat9 = 0
@@ -155,16 +165,18 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
             continue
 
         z = pdict[pla]
-        matrix.append([z.stat1[loc]*2/3, pow(z.stat1[loc]*2/3, 2), z.stat3[loc], pow(z.stat3[loc], 2), z.tstat1[loc], pow(z.tstat1[loc], 2),  
-                z.stat4[loc], pow(z.stat4[loc], 2), z.stat5[loc], pow(z.stat5[loc], 2), z.stat6[loc], z.tstat6[loc],
-                (z.stat3[loc]/z.stat5[loc]), pow(z.stat3[loc]/z.stat5[loc], 2), z.stat1[loc]/max(z.tstat1[loc], 1), z.stat3[loc]/max(z.stat4[loc], 1), 
-                z.stat7[loc], z.stat2[loc], 1, 3])
+        stat4 = min(z.stat4[loc], max(43, z.stat3[loc]+33))
+        matrix.append([z.stat1[loc], pow(z.stat1[loc], 2), z.stat3[loc], pow(z.stat3[loc], 2), z.tstat1[loc], pow(z.tstat1[loc], 2),  
+                stat4, pow(stat4, 2), z.stat5[loc], pow(z.stat5[loc], 2), z.stat6[loc], z.tstat6[loc]*0.6,
+                z.statC[loc], pow(z.statC[loc], 2), z.statB[loc], pow(z.statB[loc], 2), (z.stat3[loc]/z.stat5[loc]), 
+                pow(z.stat3[loc]/z.stat5[loc], 2), z.stat1[loc]/max(z.tstat1[loc], 1), z.stat3[loc]/max(z.stat4[loc], 1), 
+                z.stat7[loc], z.stat2[loc], 1.3, 4])
         plist.append([pla])
     
     matrix = np.delete(matrix, d, axis=1)
 
     # compute scores using weights vector
-    vals = np.matmul(matrix, weights)
+    vals = np.matmul(matrix, weights) / 4
 
     # formula for adjusting all event scores to be above 0, maintains relative positions
     x = min(vals)
@@ -176,7 +188,7 @@ def eve_pr_calc(pdict, eve, weights, d=default_d):
                 vals[i] = vals[i]*m + b
 
     # normalize and round, then pair scores with players
-    f = 10000 / sum(vals)
+    f = 10110 / sum(vals)
     vals *= f
     for i in range(len(plist)):
         plist[i].append(float(round(vals[i])))
@@ -190,7 +202,7 @@ def build_player(pdict, loc, pla, decay):
     inc = loc
     depth = 0
     div = 0
-    outlier1 = [[],[],[],[],[],[],[],[],[],[]]
+    outlier1 = [[],[],[],[],[],[],[],[],[],[],[],[]]
     outlier2 = []
     event_player = fullPlayer()
 
@@ -201,10 +213,10 @@ def build_player(pdict, loc, pla, decay):
     event_player.stat9 += 0.25 * a
     event_player.statA += 0.25 * a
 
-    stats_list = ["stat1","stat12","tstat1","tstat12","stat4","stat42","stat5","stat52","stat6","stat62","tstat6","tstat62","stat8","stat82"]
-    consts = [2, 8, 20, 20, 10, 40, 0.25]
+    stats_list = ["stat1","stat12","tstat1","tstat12","stat4","stat42","stat5","stat52","stat6","stat62","tstat6","tstat62","stat8","stat82","statC","statC2","statB","statB2"]
+    consts = [2, 8, 20, 20, 10, 40, 0.25, 1.4, 3]
     for i, stat in enumerate(stats_list):
-        setattr(event_player, stat, pow(consts[i//2]*a, i % 2 + 1))
+        setattr(event_player, stat, pow(consts[i//2], i % 2 + 1) * a)
 
     div += 1 * a
 
@@ -267,22 +279,34 @@ def build_player(pdict, loc, pla, decay):
             event_player.tstat62 += pow(value,2) * pow(decay, depth)
             if(depth < 5):
                 outlier1[6].append(value * pow(decay, depth))
+
+            value = pdict[pla].statC[inc] * comp_level
+            event_player.statC += value * pow(decay, depth)
+            event_player.statC2 += pow(value,2) * pow(decay, depth)
+            if(depth < 5):
+                outlier1[7].append(value * pow(decay, depth))
+            
+            value = pdict[pla].statB[inc] * comp_level
+            event_player.statB += value * pow(decay, depth)
+            event_player.statB2 += pow(value,2) * pow(decay, depth)
+            if(depth < 5):
+                outlier1[8].append(value * pow(decay, depth))
             
             value = pdict[pla].stat3[inc] / pdict[pla].stat5[inc]
             event_player.stat8 += value * pow(decay, depth)
             event_player.stat82 += pow(value,2) * pow(decay, depth)
             if(depth < 5):
-                outlier1[7].append(value * pow(decay, depth))
+                outlier1[9].append(value * pow(decay, depth))
 
             value = pdict[pla].stat1[inc] / max(pdict[pla].tstat1[inc], 1)
             event_player.stat9 += value * pow(decay, depth)
             if(depth < 5):
-                outlier1[8].append(value * pow(decay, depth))
+                outlier1[10].append(value * pow(decay, depth))
 
             value = pdict[pla].stat3[inc] / max(pdict[pla].stat4[inc], 1)
             event_player.statA += value * pow(decay, depth)
             if(depth < 5):
-                outlier1[9].append(value * pow(decay, depth))
+                outlier1[11].append(value * pow(decay, depth))
        
         inc -= 1
         depth += 1
@@ -300,18 +324,18 @@ def build_player(pdict, loc, pla, decay):
                 # iterate through variables in order defined in class, omitting substitution ones
                 for i, var in enumerate(vars(event_player)):
                     # reduce outlier's effect by 50%, for squared values need to compute square first
-                    if(i < 17):
+                    if(i < 21):
                         if(i % 2 == 0):
                             setattr(event_player, var, vars(event_player)[var] - outlier1[i//2][k] * 0.5)
                         else:
                             setattr(event_player, var, vars(event_player)[var] - pow(outlier1[i//2][k], 2) * 0.5 / outlier2[k])
                     elif(i == 17):
-                        setattr(event_player, var, vars(event_player)[var] - outlier1[8][k] * 0.5)
+                        setattr(event_player, var, vars(event_player)[var] - outlier1[10][k] * 0.5)
                 div -= outlier2[k] * 0.5
 
     # iterate through all variables, divide by sum of weights
     for i, var in enumerate(vars(event_player)):
-        if(i > 17):
+        if(i > 21):
             break
         setattr(event_player, var, vars(event_player)[var] / div)
 
@@ -383,15 +407,17 @@ def fill_pdict(nc=False, event=None):
             tot_stat3 += int(words[2])
             pdict[name].stat6[enum] = int(words[5])
             tot_m8at6 += int(words[5])
-            pdict[name].num_teams[enum] = len(words[6])//2+1
-            pdict[name].comp[enum] = float(words[7])
+            pdict[name].statC[enum] = int(words[6])
+            pdict[name].statB[enum] = int(words[7])
+            pdict[name].num_teams[enum] = len(words[8])//2+1
+            pdict[name].comp[enum] = float(words[9])
             team_pla.append(name)
             if(incr % 4 == 3):
                 # once all 4 members of team processed, add totals to every player
                 for pla in team_pla:
                     pdict[pla].tstat1[enum] = tot_stat1
                     pdict[pla].stat4[enum] = tot_stat3
-                    pdict[pla].tstat6[enum] = tot_m8at6 * pdict[pla].stat3[enum] / tot_stat3
+                    pdict[pla].tstat6[enum] = tot_m8at6
                 # reset totals for next team
                 team_pla = []
                 tot_stat1 = 0
@@ -412,6 +438,7 @@ def fill_pdict(nc=False, event=None):
         txtfile = os.path.join(mypath, file_list[i] + ".txt")
         f = open(txtfile, "r")
         text = f.read()
+        f.close()
         lines = text.split("\n")
         for line in lines:
             vals = line.split(" ")
@@ -445,20 +472,20 @@ def train(pdict, eve_num=None, decay=default_decay, d=default_d):
     if(eve_num is None):
         eve_num = len(all_rosters) - 2
     
-    loc = max(0,eve_num-10) + 1
+    loc = max(1, eve_num-13)
 
     # initialize stat priors for every team in every event  
-    for event in all_rosters[max(0,eve_num-10):2+eve_num]:
+    for event in all_rosters[max(eve_num-14,0):2+eve_num]:
         average = 0
         for team in event:
-            row = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            row = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
             # for each player on team, add their stats to the team's stat row
             for pla in team:
                 z = compute_eve_pla(pdict, loc, pla, decay, False)
                 row = np.add(row, [z.stat1, z.stat12, z.stat3, z.stat32, z.tstat1, z.tstat12, z.stat4, 
-                    z.stat42, z.stat5, z.stat52, z.stat6, z.tstat6, z.stat8, z.stat82, z.stat9,
-                      z.statA, z.stat7, z.stat2, 1])
-                average += z.stat1
+                    z.stat42, z.stat5, z.stat52, z.stat6, z.tstat6, z.statC, z.statC2, z.statB,
+                    z.statB2, z.stat8, z.stat82, z.stat9, z.statA, z.stat7, z.stat2, 1])
+                average += z.stat3
             # append team result to training matrix
             row = np.divide(row, 4)
             matrix.append(list(row))
@@ -475,12 +502,12 @@ def train(pdict, eve_num=None, decay=default_decay, d=default_d):
     # perform linear regression with regularization to prevent overfitting
     weights = [1000000]
     reg = 0
-    while(max(weights) > 150 or min(weights) < -150):
+    while(max(weights) > 200 or min(weights) < -200):
         ident = np.identity(len(matrix[0])) * reg
         tmatrix0 = np.transpose(matrix)
         fmatrix0 = np.matmul(np.linalg.inv(np.matmul(tmatrix0, matrix) + ident), tmatrix0)
-        weights = np.matmul(fmatrix0, results[max(0,eve_num-10)*10:20+eve_num*10])
-        reg += 0.05
+        weights = np.matmul(fmatrix0, results[max(eve_num-14,0)*10:20+eve_num*10])
+        reg += 0.3
 
     # return weight vector
     return weights
@@ -501,15 +528,15 @@ def predict(pdict, eve_num, decay=default_decay, d=default_d, roster=None):
     pdict_eve = {}
     # compute every player's stats going into the event
     for team in predict_roster:
-        row = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        row = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         for pla in team:
             z = compute_eve_pla(pdict, eve_num+3, pla, decay, False)
             pdict_eve[pla] = z
 
             row = np.add(row, [z.stat1, z.stat12, z.stat3, z.stat32, z.tstat1, z.tstat12, z.stat4, 
-                    z.stat42, z.stat5, z.stat52, z.stat6, z.tstat6, z.stat8, z.stat82, z.stat9,
-                      z.statA, z.stat7, z.stat2, 1]) 
-            average += z.stat1
+                    z.stat42, z.stat5, z.stat52, z.stat6, z.tstat6, z.statC, z.statC2, z.statB,
+                    z.statB2, z.stat8, z.stat82, z.stat9, z.statA, z.stat7, z.stat2, 1]) 
+            average += z.stat3
         row = np.divide(row, 4)
         input_matrix.append(list(row))
     
@@ -523,7 +550,7 @@ def predict(pdict, eve_num, decay=default_decay, d=default_d, roster=None):
 
     result = np.matmul(input_matrix, weights)
 
-    norm = 10400 / sum(result)
+    norm = 10000 / sum(result)
     result = result * norm
     for j in range(10):
         result[j] = float(round(result[j]))
@@ -557,9 +584,9 @@ def generate_pr(pdict, decay=default_decay, d=default_d):
         z = compute_eve_pla(pdict, len(all_rosters)+1, pla, decay, True)
         pla_dict[pla] = z
         matrix_pr.append([z.stat1, z.stat12, z.stat3, z.stat32, z.tstat1, z.tstat12, z.stat4, 
-                    z.stat42, z.stat5, z.stat52, z.stat6, z.tstat6, z.stat8, z.stat82, z.stat9,
-                      z.statA, z.stat7, z.stat2, 1])
-        average += z.stat1
+                    z.stat42, z.stat5, z.stat52, z.stat6, z.tstat6, z.statC, z.statC2, z.statB,
+                    z.statB2, z.stat8, z.stat82, z.stat9, z.statA, z.stat7, z.stat2, 1])
+        average += z.stat3
         pr.append([pla])
 
     average /= len(pdict)
@@ -580,6 +607,7 @@ def generate_pr(pdict, decay=default_decay, d=default_d):
     # get the current list of players and their frequency playing
     f = open(os.path.join(os.path.split(os.path.dirname(__file__))[0], "current_list.txt"))
     text = f.read()
+    f.close()
     lines = text.split("\n")
     pfreq_dict = {}
     for line in lines:
@@ -620,10 +648,10 @@ if __name__ == "__main__":
         if(key != "CUR"):
             val = cla.eve_pr(key)
             for value in val:
-                perfList.append([value[1], value[0] + key[-2:]])
+                perfList.append([value[1], value[0] + key[3:]])
     perfList = sorted(perfList, reverse=True)
 
-    val = cla.eve_pr("EVE_41")
+    val = cla.eve_pr("EVE_47")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):
@@ -674,6 +702,8 @@ if __name__ == "__main__":
 
     # FEATURE SELECTION CODE
     
+    # full_d = [9, 10, 15, 17, 20, 21]
+
     # matrix = np.delete(matrix, full_d, axis=1)
     
     # from itertools import chain, combinations
@@ -683,41 +713,42 @@ if __name__ == "__main__":
     #     s = list(iterable)
     #     return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
-    # y = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+    # y = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
     # c = powerset(y)
     # d = list(c)
     # del d[len(d) - 1]
     # overall_error = []
-    # for m in range(1, 6):
-    #     for i in range(377):
+    # for m in range(1, 8):
+    #     for i in range(4048, 63004):
+    #         if(i % 100 == 0):
+    #             print(i)
     #         temp_matrix = np.array(np.copy(matrix))
     #         temp_matrix = np.delete(temp_matrix, list(d[i]), axis=1)
-    #         matrix1 = temp_matrix[:(m*-10)]
+    #         matrix1 = temp_matrix[len(temp_matrix)-160-m*10:(m*-10)]
     #         # perform linear regression with regularization to prevent overfitting
     #         weights = [1000000]
     #         reg = 0
-    #         while(max(weights) > 500 or min(weights) < -500):
+    #         while(max(weights) > 200 or min(weights) < -200):
     #             ident = np.identity(len(matrix1[0])) * reg
     #             tmatrix0 = np.transpose(matrix1)
     #             fmatrix0 = np.matmul(np.linalg.inv(np.matmul(tmatrix0, matrix1) + ident), tmatrix0)
-    #             weights = np.matmul(fmatrix0, results[:20+eve_num*10-(m*10)])
-    #             reg += 0.05
+    #             weights = np.matmul(fmatrix0, results[len(results)-160-m*10:(m*-10)])
+    #             reg += 0.5
 
-    #         test = np.matmul(temp_matrix[20+eve_num*10-(m*10):30+eve_num*10-(m*10)], weights)
+    #         test = np.matmul(temp_matrix[m*-10:len(results)-m*10+10], weights)
     #         norm = 10000 / sum(test)
     #         test = test * norm
-    #         results_test = results[20+eve_num*10-(m*10):30+eve_num*10-(m*10)]
+    #         results_test = results[m*-10:len(results)-m*10+10]
     #         error = 0
     #         for j in range(10):
     #             test[j] = float(round(test[j]))
     #             error += np.power((test[j] - results_test[j]), 2)
     #         error = error / 10
     #         error = np.sqrt(error)
-    #         print(error)
     #         tot_err = error 
     #         if(m == 1):
     #             overall_error.append([tot_err, d[i]])
     #         else:
-    #             overall_error[i][0] += tot_err
+    #             overall_error[i-4048][0] += tot_err
     
     # overall_error = sorted(overall_error, key=lambda x: x[0])

@@ -30,7 +30,7 @@ def find_str(eve_num):
 
     return strengths
 
-event_select = [10,12,13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42,43]
+event_select = [10,12,13,14,15,16,19,20,21,23,24,25,27,29,31,32,33,34,35,36,38,39,41,42,43,45]
 
 # instantiate all_rosters by reading from file
 mypath = os.path.dirname(__file__)
@@ -153,7 +153,7 @@ for enum, event in enumerate(events):
     # convert stats for all players into formatted string
     for pla in pla_dict:
         p = pla_dict[pla]
-        new_str += "%s\t%d\t%d\t%.2f\t%d\t%d\t" % (pla, p[0], p[1], p[2], p[3], p[4])
+        new_str += "%s\t%d\t%d\t%.2f\t%d\t%d\t" % (pla, p[0], p[1], p[2], p[3], int(p[4]/4+0.25))
         for num in p[5]:
             new_str += "%d," % (num)
         new_str = new_str[:-1]
