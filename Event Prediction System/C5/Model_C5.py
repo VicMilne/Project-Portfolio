@@ -128,10 +128,10 @@ class C5_class:
         self.eve_str = compute_eve_str(self.pdict)
         self.pr_eve_str = compute_eve_str(self.pdict, 11)
         self.e_dict = {"EVE_3": -5, "EVE_5": -4, "EVE_6": -3, "EVE_8": -2, "EVE_10": -1, "EVE_11": 0,
-                       "EVE_14": 1, "EVE_15": 2, "EVE_16": 3, "EVE_21": 4, "EVE_24": 5, "EVE_25": 6, "EVE_26": 7,
-                       "EVE_28": 8, "EVE_30": 9, "EVE_33": 11, "EVE_34": 12, "EVE_38": 13, 
-                       "EVE_44": 15, "EVE_45": 16, "EVE_48": 17, "CUR": 18}
-        self.nc_eves = {"EVE_1", "EVE_2", "EVE_12", "EVE_17", "EVE_32", "EVE_40", "EVE_46", "EVE_51"}
+                       "EVE_14": 1, "EVE_15": 2, "EVE_16": 3, "EVE_20": 4, "EVE_23": 5, "EVE_24": 6, "EVE_25": 7,
+                       "EVE_27": 8, "EVE_29": 9, "EVE_32": 11, "EVE_33": 12, "EVE_37": 13, 
+                       "EVE_43": 15, "EVE_44": 16, "EVE_47": 17, "CUR": 18}
+        self.nc_eves = {"EVE_1", "EVE_2", "EVE_12", "EVE_A", "EVE_31", "EVE_39", "EVE_45", "EVE_C"}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -609,7 +609,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_46")
+    val = cla.eve_pr("EVE_45")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):

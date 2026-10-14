@@ -132,12 +132,12 @@ class C1_class:
         self.eve_str = compute_eve_str(self.pdict)
         self.pr_eve_str = compute_eve_str(self.pdict, 18)
         self.e_dict = {"EVE_1": -11, "EVE_3": -10, "EVE_4": -9, "EVE_5": -8, "EVE_6": -7, "EVE_9": -6,
-                       "EVE_11": -5, "EVE_13": -4, "EVE_14": -3, "EVE_15": -2, "EVE_18": -1,
-                       "EVE_19": 0, "EVE_21": 1, "EVE_24": 2, "EVE_25": 3, "EVE_27": 4, "EVE_29": 5, 
-                       "EVE_31": 6, "EVE_33": 7, "EVE_34": 8, "EVE_37": 9, "EVE_39": 10, "EVE_41": 11,
-                       "EVE_42": 12, "EVE_43": 13, "EVE_47": 15, "EVE_48": 16, "EVE_49": 17, "CUR": 18}
-        self.nc_eves = {"EVE_2", "EVE_7", "EVE_12", "EVE_17", "EVE_23", "EVE_32", "EVE_36", 
-                        "EVE_44", "EVE_50", "EVE_51"}
+                       "EVE_11": -5, "EVE_13": -4, "EVE_14": -3, "EVE_15": -2, "EVE_17": -1,
+                       "EVE_18": 0, "EVE_20": 1, "EVE_23": 2, "EVE_24": 3, "EVE_26": 4, "EVE_28": 5, 
+                       "EVE_30": 6, "EVE_32": 7, "EVE_33": 8, "EVE_36": 9, "EVE_38": 10, "EVE_40": 11,
+                       "EVE_41": 12, "EVE_42": 13, "EVE_46": 15, "EVE_47": 16, "EVE_48": 17, "CUR": 18}
+        self.nc_eves = {"EVE_2", "EVE_7", "EVE_12", "EVE_A", "EVE_22", "EVE_31", "EVE_35", 
+                        "EVE_43", "EVE_B", "EVE_C"}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -354,7 +354,7 @@ def fill_pdict(nc=False, event=None):
         
         # for unbalanced events, override the mean and std with precomputed values
         overrides = {17: [499.9, 30.2806], 18: [403.5216, 22.1289], 19: [496.23, 25.2112], 21: [505.74, 23.66], 22: [473.41, 28.17], 26: [488.58, 39.53]}
-        overrides_nc = {"EVE_32": [499.9, 30.2806], "EVE_2": [416.8, 58.65], "EVE_12": [385.46, 43.4221]}
+        overrides_nc = {"EVE_31": [499.9, 30.2806], "EVE_2": [416.8, 58.65], "EVE_12": [385.46, 43.4221]}
 
         # check need for overrides for counted and non-counted events
         if(nc and event in overrides_nc):
@@ -610,7 +610,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_23")
+    val = cla.eve_pr("EVE_22")
 
     # if current event, return player rankings
     if(cla.e_dict["CUR"] == eve_num):

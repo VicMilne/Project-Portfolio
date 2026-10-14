@@ -79,10 +79,10 @@ class C4_class:
     def __init__(self):
         self.pdict, self.popt = fill_pdict()
         self.e_dict = {"EVE_12": 7, "EVE_10": 6, "EVE_9": 5, "EVE_8": 4, "EVE_7": 3, "EVE_6": 2, "EVE_5": 1, "EVE_4": 0,
-                       "EVE_13": 8, "EVE_14": 9, "EVE_15": 9, "EVE_16": 10, "EVE_18": 11, "EVE_19": 12, 
-                       "EVE_21": 13, "EVE_22": 14, "EVE_24": 15, "EVE_25": 16, "EVE_26": 17, "EVE_27": 18,
-                       "EVE_29": 19, "EVE_31": 20, "EVE_33": 21, "EVE_34": 22, "EVE_36": 23, "EVE_39": 24, 
-                       "EVE_41": 25, "EVE_43": 26, "EVE_44": 27, "CUR": 28}
+                       "EVE_13": 8, "EVE_14": 9, "EVE_15": 9, "EVE_16": 10, "EVE_17": 11, "EVE_18": 12, 
+                       "EVE_20": 13, "EVE_21": 14, "EVE_23": 15, "EVE_24": 16, "EVE_25": 17, "EVE_26": 18,
+                       "EVE_28": 19, "EVE_30": 20, "EVE_32": 21, "EVE_33": 22, "EVE_35": 23, "EVE_38": 24, 
+                       "EVE_40": 25, "EVE_42": 26, "EVE_43": 27, "CUR": 28}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.popt, self.e_dict[event], roster=roster)
@@ -100,7 +100,7 @@ class C4_class:
         return indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        if(event in ["EVE_17", "EVE_50", "EVE_46", "EVE_51"]):
+        if(event in ["EVE_A", "EVE_B", "EVE_45", "EVE_C"]):
             return get_scores(event)
         
         weights = train(self.pdict, self.popt, e_num=19, d=[])

@@ -101,10 +101,10 @@ fasts = {0: {5:["P012","P019","P118"], 4:["P022"], 1:["P042","P032","P060","P025
 
 
 fasts_nc = {"EVE_7": {5:["P019","P118"], 4:["P022","P029"], 2:["P078","P057","P168"], 1:["P054"]},
-            "EVE_23": {3:["P059","P044","P063","P017"], 2:["P001","P067","P096","P097"], 1:["P042","P025","P023","P153"]},
-            "EVE_31": {4:["P032","P147","P155","P151"], 1:["P001","P063","P023","P016"]},
-            "EVE_36": {1:["P022","P011","P051","P077"]},
-            "EVE_40": {7:["P001","P124","P226","P038"], 4:["P042","P011","P067","P019","P029","P227","P030"], 3:["P098"], 1:["P022","P044","P005","P225","P046","P059"]}}
+            "EVE_22": {3:["P059","P044","P063","P017"], 2:["P001","P067","P096","P097"], 1:["P042","P025","P023","P153"]},
+            "EVE_30": {4:["P032","P147","P155","P151"], 1:["P001","P063","P023","P016"]},
+            "EVE_35": {1:["P022","P011","P051","P077"]},
+            "EVE_39": {7:["P001","P124","P226","P038"], 4:["P042","P011","P067","P019","P029","P227","P030"], 3:["P098"], 1:["P022","P044","P005","P225","P046","P059"]}}
 
 class C2_class:
     def __init__(self):
@@ -112,11 +112,11 @@ class C2_class:
         self.eve_str = compute_eve_str(self.pdict)
         self.pr_eve_str = compute_eve_str(self.pdict, 13)
         self.e_dict = {"EVE_1": -6, "EVE_3": -5, "EVE_6": -4, "EVE_8": -3, "EVE_10": -2, "EVE_11": -1,
-                       "EVE_14": 0, "EVE_15": 1, "EVE_16": 2, "EVE_18": 3, "EVE_19": 4, "EVE_21": 5, "EVE_24": 6, 
-                       "EVE_25": 7, "EVE_28": 8, "EVE_29": 9, "EVE_30": 10, "EVE_35": 11, "EVE_37": 12, 
-                       "EVE_39": 13, "EVE_42": 14, "EVE_43": 15, "EVE_47": 16, "EVE_48": 17, "CUR": 18}
-        self.nc_eves = {"EVE_2", "EVE_7", "EVE_12", "EVE_17", "EVE_23", "EVE_31", "EVE_36", "EVE_40",
-                        "EVE_44", "EVE_51"}
+                       "EVE_14": 0, "EVE_15": 1, "EVE_16": 2, "EVE_17": 3, "EVE_18": 4, "EVE_20": 5, "EVE_23": 6, 
+                       "EVE_24": 7, "EVE_27": 8, "EVE_28": 9, "EVE_29": 10, "EVE_34": 11, "EVE_36": 12, 
+                       "EVE_38": 13, "EVE_41": 14, "EVE_42": 15, "EVE_46": 16, "EVE_47": 17, "CUR": 18}
+        self.nc_eves = {"EVE_2", "EVE_7", "EVE_12", "EVE_A", "EVE_22", "EVE_30", "EVE_35", "EVE_39",
+                        "EVE_43", "EVE_C"}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], self.eve_str, roster=roster)
@@ -700,7 +700,7 @@ if __name__ == "__main__":
     perfList = sorted(perfList, reverse=True)
 
     # eve_pr test
-    val = cla.eve_pr("EVE_48")
+    val = cla.eve_pr("EVE_47")
 
     # if current event, return pr
     if(cla.e_dict["CUR"] == eve_num):

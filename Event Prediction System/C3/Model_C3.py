@@ -92,9 +92,9 @@ class C3_class:
     def __init__(self):
         self.pdict = fill_pdict()
         self.e_dict = {"EVE_1": 0, "EVE_2": 1, "EVE_4": 2, "EVE_5": 3, "EVE_6": 4, "EVE_7": 5,
-                       "EVE_8": 6, "EVE_9": 7, "EVE_12": 8, "EVE_14": 9, "EVE_23": 11, "EVE_28": 12, 
-                       "EVE_31": 13, "EVE_36": 14, "EVE_37": 15, "EVE_39": 16, "EVE_40": 17, "EVE_42": 18, 
-                       "EVE_45": 19, "EVE_47": 20, "EVE_48": 21, "CUR": 22}
+                       "EVE_8": 6, "EVE_9": 7, "EVE_12": 8, "EVE_14": 9, "EVE_22": 11, "EVE_27": 12, 
+                       "EVE_30": 13, "EVE_35": 14, "EVE_36": 15, "EVE_38": 16, "EVE_39": 17, "EVE_41": 18, 
+                       "EVE_44": 19, "EVE_46": 20, "EVE_47": 21, "CUR": 22}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.e_dict[event], roster=roster)
@@ -112,9 +112,9 @@ class C3_class:
         return indiv
     # computes and returns single event player scores
     def eve_pr(self, event):
-        if(event == "EVE_32"):
+        if(event == "EVE_31"):
             return nceve1
-        if(event == "EVE_50"):
+        if(event == "EVE_B"):
             return nceve2
         
         weights = train(self.pdict, e_num=12, d=[1,3])

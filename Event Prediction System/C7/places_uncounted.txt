@@ -769,7 +769,7 @@ beinpa ef mgieroq - eokvf P167 (4th), P097 (2nd)
 beinpa negowv owf n jdofz jep ewoj jfrc
 ero pfel ker merpw meokwds: P150, P170
 ===
-EVE_17
+EVE_A
 vpode ef qimpfcn - eokvf P041 (1st), P033 (1st)
 <0:13> P173 weopfm vons qowdm P041
 <0:21> P079 weopfm vons qowdm P033
@@ -1160,7 +1160,7 @@ mgieroq woejofdv owf n jdofz jep ewoj jfrc
 <0:57> P127 weopfm vons qowdm P156
 ero pfel ker merpw meokwds: P043
 ===
-EVE_23
+EVE_22
 vpode ef bosrj - eokvf P025 (1st), P036 (1st)
 <0:10> P042 weopfm vons qowdm P036
 <0:11> P153 weopfm vons qowdm P036

@@ -97,11 +97,11 @@ class C8_class:
         self.eve_str = compute_eve_str(self.pdict)
         self.pr_eve_str = compute_eve_str(self.pdict, 18)
         self.e_dict = {"EVE_3": -8, "EVE_4": -7,"EVE_5": -6, "EVE_6": -5, "EVE_7": -4, "EVE_8": -3,
-                    "EVE_9": -2, "EVE_10": -1, "EVE_11": 0, "EVE_14": 1, "EVE_18": 2, "EVE_19": 3, 
-                    "EVE_21": 5, "EVE_22": 6, "EVE_24": 7, "EVE_25": 8, "EVE_28": 9, "EVE_29": 10, 
-                    "EVE_30": 11, "EVE_35": 12, "EVE_37": 13, "EVE_40": 14, "EVE_42": 15, "EVE_43": 16,
-                    "EVE_44": 17, "EVE_45": 18, "CUR": 19}
-        self.nc_eves = {"EVE_17": 3, "EVE_23": 8}
+                    "EVE_9": -2, "EVE_10": -1, "EVE_11": 0, "EVE_14": 1, "EVE_17": 2, "EVE_18": 3, 
+                    "EVE_20": 5, "EVE_21": 6, "EVE_23": 7, "EVE_24": 8, "EVE_27": 9, "EVE_28": 10, 
+                    "EVE_29": 11, "EVE_34": 12, "EVE_36": 13, "EVE_39": 14, "EVE_41": 15, "EVE_42": 16,
+                    "EVE_43": 17, "EVE_44": 18, "CUR": 19}
+        self.nc_eves = {"EVE_A": 3, "EVE_22": 8}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.eve_str, self.e_dict[event], roster=roster)

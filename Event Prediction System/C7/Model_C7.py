@@ -56,12 +56,12 @@ class C7_class:
     def __init__(self):
         self.pdict = fill_pdict()
         self.e_dict = {"EVE_1": -5, "EVE_3": -4, "EVE_4": -3, "EVE_7": -2, "EVE_9": -1, "EVE_10": 0,
-                       "EVE_11": 1, "EVE_13": 2, "EVE_15": 3, "EVE_19": 4, "EVE_22": 5, "EVE_26": 6, 
-                       "EVE_28": 7, "EVE_31": 8, "EVE_37": 9, "EVE_39": 10, "EVE_43": 11, "EVE_47": 12,
+                       "EVE_11": 1, "EVE_13": 2, "EVE_15": 3, "EVE_18": 4, "EVE_21": 5, "EVE_25": 6, 
+                       "EVE_27": 7, "EVE_30": 8, "EVE_36": 9, "EVE_38": 10, "EVE_42": 11, "EVE_46": 12,
                        "CUR": 13}
         self.eve_str = compute_eve_str(self.pdict)
         self.pr_eve_str = compute_eve_str(self.pdict, 10)
-        self.nc_eves = {"EVE_2": 4, "EVE_12": 4, "EVE_17": 6, "EVE_23": 8}
+        self.nc_eves = {"EVE_2": 4, "EVE_12": 4, "EVE_A": 6, "EVE_22": 8}
     # returns the predicted result of a previous event, with option to override with new roster
     def prev_sim(self, event, roster=None):
         results = predict(self.pdict, self.eve_str, self.e_dict[event], roster=roster)
@@ -122,7 +122,7 @@ nc_roster = [[["P054", "P086", "P079", "P010"], ["P059", "P032", "P041", "P157"]
     ["P044", "P059", "P063", "P017"], ["P001", "P067", "P096", "P097"],
     ["P036", "P145", "P016", "P115"], ["P000", "P009", "P062", "P146"]]]
 
-nc_nums = {"EVE_2": 0, "EVE_12": 1, "EVE_17": 2, "EVE_23": 3}
+nc_nums = {"EVE_2": 0, "EVE_12": 1, "EVE_A": 2, "EVE_22": 3}
 
 class Player:
     def __init__(self):
